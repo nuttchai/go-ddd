@@ -18,3 +18,4 @@ Acknowledgement
 
 - [Implement Domain-Driven Design (DDD) in Golang](https://medium.com/@next_shore/implement-domain-driven-design-ddd-in-golang-ecdb6b6367ed)
 - [How to implement DDD in Golang](https://programmingpercy.tech/blog/how-to-domain-driven-design-ddd-golang)
+- [alextanhongpin/go-ddd](https://github.com/alextanhongpin/go-ddd)
