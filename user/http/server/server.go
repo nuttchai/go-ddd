@@ -1,6 +1,7 @@
 package http
 
 import (
+	"github.com/nuttchai/go-ddd/user/app"
 	service "github.com/nuttchai/go-ddd/user/domain/services"
 	mapper "github.com/nuttchai/go-ddd/user/infra/data-mappers"
 	repository "github.com/nuttchai/go-ddd/user/infra/repositories"
@@ -15,5 +16,6 @@ func InitServer() {
 	}
 
 	userRepo := repository.NewUserRepository(db, &mapper.UserDataMapper{})
-	_ = service.NewUserService(userRepo)
+	userSvc := service.NewUserService(userRepo)
+	_ = app.NewUserApp(userSvc)
 }
