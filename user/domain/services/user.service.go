@@ -12,7 +12,7 @@ type UserService struct {
 	userRepo repo.IUserRepository
 }
 
-func NewUserService(userRepo repo.IUserRepository) *UserService {
+func NewUserService(userRepo repo.IUserRepository) IUserService {
 	return &UserService{
 		userRepo: userRepo,
 	}

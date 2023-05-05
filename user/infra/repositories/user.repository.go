@@ -7,6 +7,7 @@ import (
 	crepo "github.com/nuttchai/go-ddd/common/infra/repositories"
 	constant "github.com/nuttchai/go-ddd/user/domain/constants"
 	entity "github.com/nuttchai/go-ddd/user/domain/entities"
+	irepo "github.com/nuttchai/go-ddd/user/domain/repositories"
 	model "github.com/nuttchai/go-ddd/user/infra/models"
 	"gorm.io/gorm"
 )
@@ -17,7 +18,7 @@ type UserRepository struct {
 	dataMapper   cmapper.IDataMapper[entity.User, model.User]
 }
 
-func NewUserRepository(queryAdapter *gorm.DB, dataMapper cmapper.IDataMapper[entity.User, model.User]) *UserRepository {
+func NewUserRepository(queryAdapter *gorm.DB, dataMapper cmapper.IDataMapper[entity.User, model.User]) irepo.IUserRepository {
 	return &UserRepository{
 		Repository:   crepo.NewRepository(queryAdapter, dataMapper),
 		queryAdapter: queryAdapter,

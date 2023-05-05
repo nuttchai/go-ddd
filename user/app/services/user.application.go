@@ -13,7 +13,7 @@ type UserApplicationService struct {
 	userAppDataMapper cmapper.IDataMapper[entity.User, dto.UserDTO]
 }
 
-func NewUserApplicationService(userService service.IUserService, userAppDataMapper cmapper.IDataMapper[entity.User, dto.UserDTO]) *UserApplicationService {
+func NewUserApplicationService(userService service.IUserService, userAppDataMapper cmapper.IDataMapper[entity.User, dto.UserDTO]) IUserApplicationService {
 	return &UserApplicationService{
 		userService:       userService,
 		userAppDataMapper: userAppDataMapper,
