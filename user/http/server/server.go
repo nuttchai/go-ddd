@@ -1,9 +1,11 @@
 package http
 
 import (
-	"github.com/nuttchai/go-ddd/user/app"
+	appmapper "github.com/nuttchai/go-ddd/user/app/data-mappers"
+	application "github.com/nuttchai/go-ddd/user/app/services"
 	service "github.com/nuttchai/go-ddd/user/domain/services"
-	mapper "github.com/nuttchai/go-ddd/user/infra/data-mappers"
+	controller "github.com/nuttchai/go-ddd/user/http/controllers"
+	inframapper "github.com/nuttchai/go-ddd/user/infra/data-mappers"
 	repository "github.com/nuttchai/go-ddd/user/infra/repositories"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -15,7 +17,9 @@ func InitServer() {
 		panic("failed to connect to the database")
 	}
 
-	userRepo := repository.NewUserRepository(db, &mapper.UserDataMapper{})
+	userRepo := repository.NewUserRepository(db, &inframapper.UserDataMapper{})
+	userRepo.FindOneByEmail("")
 	userSvc := service.NewUserService(userRepo)
-	_ = app.NewUserApp(userSvc)
+	userApp := application.NewUserApplicationService(userSvc, &appmapper.UserAppDataMapper{})
+	_ = controller.NewUserController(userApp)
 }
