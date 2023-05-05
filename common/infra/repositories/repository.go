@@ -20,14 +20,6 @@ func NewRepository[TDomainEntity any, TDalEntity any](queryAdapter *gorm.DB, dat
 	}
 }
 
-func (r *Repository[TDomainEntity, TDalEntity]) DataMapper() mapper.IDataMapper[TDomainEntity, TDalEntity] {
-	return r.dataMapper
-}
-
-func (r *Repository[TDomainEntity, TDalEntity]) QueryAdapter() *gorm.DB {
-	return r.queryAdapter
-}
-
 func (r *Repository[TDomainEntity, TDalEntity]) FindOneById(id string) (*TDomainEntity, error) {
 	item := new(TDalEntity)
 	if dbResult := r.queryAdapter.Where("id = ?", id).First(item); dbResult.Error != nil {
