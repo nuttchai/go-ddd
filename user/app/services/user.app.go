@@ -1,7 +1,7 @@
 package app
 
 import (
-	http "github.com/nuttchai/go-ddd/common/http"
+	api "github.com/nuttchai/go-ddd/common/api"
 	cmapper "github.com/nuttchai/go-ddd/common/infra/data-mappers"
 	entity "github.com/nuttchai/go-ddd/user/domain/entities"
 	service "github.com/nuttchai/go-ddd/user/domain/services"
@@ -20,19 +20,19 @@ func NewUserAppService(userService service.IUserService, userAppDataMapper cmapp
 	}
 }
 
-func (a *UserAppService) FindUserById(payload dto.FindUserByIdDTO) (*http.APISuccess, *http.APIError) {
+func (a *UserAppService) FindUserById(payload dto.FindUserByIdDTO) (*api.APISuccess, *api.APIError) {
 	user, err := a.userService.FindOneById(payload.Id)
 	if err != nil {
-		jsonErr := http.BadRequestError(err)
+		jsonErr := api.BadRequestError(err)
 		return nil, jsonErr
 	}
 
 	userDTO, err := a.userAppDataMapper.ToDalEntity(user)
 	if err != nil {
-		jsonErr := http.InternalServerError(err)
+		jsonErr := api.InternalServerError(err)
 		return nil, jsonErr
 	}
 
-	jsonOk := http.SuccessResponse(userDTO)
+	jsonOk := api.SuccessResponse(userDTO)
 	return jsonOk, nil
 }
