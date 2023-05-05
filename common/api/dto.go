@@ -9,8 +9,8 @@ import (
 	validator "github.com/nuttchai/go-ddd/utils/validators"
 )
 
-func DecodeDTO(c echo.Context, ptr any) error {
-	decoder := json.NewDecoder(c.Request().Body)
+func DecodeDTO(e echo.Context, ptr any) error {
+	decoder := json.NewDecoder(e.Request().Body)
 	if err := decoder.Decode(ptr); err != nil {
 		msg := fmt.Sprintf("decoding json error: %s", err.Error())
 		return errors.New(msg)
