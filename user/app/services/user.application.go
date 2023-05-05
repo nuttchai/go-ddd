@@ -8,19 +8,19 @@ import (
 	dto "github.com/nuttchai/go-ddd/user/dtos"
 )
 
-type UserAppService struct {
+type UserApplicationService struct {
 	userService       service.IUserService
 	userAppDataMapper cmapper.IDataMapper[entity.User, dto.UserDTO]
 }
 
-func NewUserAppService(userService service.IUserService, userAppDataMapper cmapper.IDataMapper[entity.User, dto.UserDTO]) *UserAppService {
-	return &UserAppService{
+func NewUserApplicationService(userService service.IUserService, userAppDataMapper cmapper.IDataMapper[entity.User, dto.UserDTO]) *UserApplicationService {
+	return &UserApplicationService{
 		userService:       userService,
 		userAppDataMapper: userAppDataMapper,
 	}
 }
 
-func (a *UserAppService) FindUserById(payload dto.FindUserByIdDTO) (*api.APISuccess, *api.APIError) {
+func (a *UserApplicationService) FindUserById(payload dto.FindUserByIdDTO) (*api.APISuccess, *api.APIError) {
 	user, err := a.userService.FindOneById(payload.Id)
 	if err != nil {
 		jsonErr := api.BadRequestError(err)

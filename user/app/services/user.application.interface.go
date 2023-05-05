@@ -5,6 +5,6 @@ import (
 	dto "github.com/nuttchai/go-ddd/user/dtos"
 )
 
-type IUserAppService interface {
+type IUserApplicationService interface {
 	FindUserById(payload dto.FindUserByIdDTO) (*api.APISuccess, *api.APIError)
 }
