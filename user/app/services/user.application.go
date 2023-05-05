@@ -20,19 +20,19 @@ func NewUserApplicationService(userService service.IUserService, userAppDataMapp
 	}
 }
 
-func (a *UserApplicationService) FindUserById(payload dto.FindUserByIdDTO) (*api.APISuccess, *api.APIError) {
+func (a *UserApplicationService) FindUserById(payload *dto.FindUserByIdDTO) *api.APIResponse {
 	user, err := a.userService.FindOneById(payload.Id)
 	if err != nil {
 		jsonErr := api.BadRequestError(err)
-		return nil, jsonErr
+		return &api.APIResponse{APIError: jsonErr}
 	}
 
 	userDTO, err := a.userAppDataMapper.ToDalEntity(user)
 	if err != nil {
 		jsonErr := api.InternalServerError(err)
-		return nil, jsonErr
+		return &api.APIResponse{APIError: jsonErr}
 	}
 
 	jsonOk := api.SuccessResponse(userDTO)
-	return jsonOk, nil
+	return &api.APIResponse{APISuccess: jsonOk}
 }

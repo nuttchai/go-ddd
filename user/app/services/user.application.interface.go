@@ -6,5 +6,5 @@ import (
 )
 
 type IUserApplicationService interface {
-	FindUserById(payload dto.FindUserByIdDTO) (*api.APISuccess, *api.APIError)
+	FindUserById(payload *dto.FindUserByIdDTO) *api.APIResponse
 }
