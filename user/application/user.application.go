@@ -27,12 +27,7 @@ func (a *UserApplicationService) FindUserById(payload *dto.FindUserByIdDTO) *htt
 		return &http.APIResponse{APIError: jsonErr}
 	}
 
-	userDTO, err := a.UserReqDataMapper.ToDalEntity(user)
-	if err != nil {
-		jsonErr := http.InternalServerError(err)
-		return &http.APIResponse{APIError: jsonErr}
-	}
-
+	userDTO := a.UserReqDataMapper.ToDalEntity(user)
 	jsonOk := http.SuccessResponse(userDTO)
 	return &http.APIResponse{APISuccess: jsonOk}
 }

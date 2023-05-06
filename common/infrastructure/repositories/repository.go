@@ -25,7 +25,7 @@ func (r *Repository[TDomainEntity, TDalEntity]) FindOneById(id string) (*TDomain
 	if dbResult := r.queryAdapter.Where("id = ?", id).First(item); dbResult.Error != nil {
 		return nil, dbResult.Error
 	}
-	return r.dataMapper.ToDomainEntity(item)
+	return r.dataMapper.ToDomainEntity(item), nil
 }
 
 func (r *Repository[TDomainEntity, TDalEntity]) Save(entity *TDomainEntity) error {
@@ -37,7 +37,7 @@ func (r *Repository[TDomainEntity, TDalEntity]) Save(entity *TDomainEntity) erro
 		return errors.New(constant.ItemAlreadyExisted)
 	}
 
-	dalEntity, err := r.dataMapper.ToDalEntity(entity)
+	dalEntity := r.dataMapper.ToDalEntity(entity)
 	if err != nil {
 		return err
 	}
@@ -54,11 +54,7 @@ func (r *Repository[TDomainEntity, TDalEntity]) Delete(id string) error {
 }
 
 func (r *Repository[TDomainEntity, TDalEntity]) IsExisted(entity *TDomainEntity) (bool, error) {
-	dalEntity, err := r.dataMapper.ToDalEntity(entity)
-	if err != nil {
-		return false, err
-	}
-
+	dalEntity := r.dataMapper.ToDalEntity(entity)
 	if dbResult := r.queryAdapter.First(dalEntity); dbResult.RowsAffected > 0 {
 		return false, nil
 	}

@@ -44,11 +44,7 @@ func (r *UserRepository) UpdateFirstNameIfIdExist(id, firstName string) error {
 		return err
 	}
 
-	userDAL, err := r.dataMapper.ToDalEntity(user)
-	if err != nil {
-		return err
-	}
-
+	userDAL := r.dataMapper.ToDalEntity(user)
 	userDAL.FirstName = firstName
 	return r.Repository.Save(user)
 }
@@ -64,5 +60,5 @@ func (r *UserRepository) FindOneByEmail(email string) (*entity.User, error) {
 		return nil, dbResult.Error
 	}
 
-	return r.dataMapper.ToDomainEntity(&userDAL)
+	return r.dataMapper.ToDomainEntity(&userDAL), nil
 }

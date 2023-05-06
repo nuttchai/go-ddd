@@ -8,7 +8,7 @@ import (
 
 type UserDataMapper struct{}
 
-func (m *UserDataMapper) ToDomainEntity(dalEntity *model.User) (*entity.User, error) {
+func (m *UserDataMapper) ToDomainEntity(dalEntity *model.User) *entity.User {
 	return &entity.User{
 		Id:        dalEntity.Id,
 		FirstName: dalEntity.FirstName,
@@ -20,10 +20,10 @@ func (m *UserDataMapper) ToDomainEntity(dalEntity *model.User) (*entity.User, er
 			State:   dalEntity.Address.State,
 			ZipCode: dalEntity.Address.ZipCode,
 		},
-	}, nil
+	}
 }
 
-func (m *UserDataMapper) ToDalEntity(domainEntity *entity.User) (*model.User, error) {
+func (m *UserDataMapper) ToDalEntity(domainEntity *entity.User) *model.User {
 	return &model.User{
 		Id:        domainEntity.Id,
 		FirstName: domainEntity.FirstName,
@@ -35,5 +35,5 @@ func (m *UserDataMapper) ToDalEntity(domainEntity *entity.User) (*model.User, er
 			State:   domainEntity.Address.State,
 			ZipCode: domainEntity.Address.ZipCode,
 		},
-	}, nil
+	}
 }
