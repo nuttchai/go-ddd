@@ -34,6 +34,7 @@ func (m *UserDataMapper) ToDalEntity(domainEntity *entity.User) *model.User {
 			City:    domainEntity.Address.City,
 			State:   domainEntity.Address.State,
 			ZipCode: domainEntity.Address.ZipCode,
+			UserId:  domainEntity.Id,
 		},
 	}
 }
