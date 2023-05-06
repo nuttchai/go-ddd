@@ -6,9 +6,9 @@ import (
 	dto "github.com/nuttchai/go-ddd/user/dtos"
 )
 
-type UserAppDataMapper struct{}
+type UserReqDataMapper struct{}
 
-func (m *UserAppDataMapper) ToDomainEntity(dalEntity *dto.UserDTO) (*entity.User, error) {
+func (m *UserReqDataMapper) ToDomainEntity(dalEntity *dto.UserDTO) (*entity.User, error) {
 	return &entity.User{
 		Id:        dalEntity.Id,
 		FirstName: dalEntity.FirstName,
@@ -23,7 +23,7 @@ func (m *UserAppDataMapper) ToDomainEntity(dalEntity *dto.UserDTO) (*entity.User
 	}, nil
 }
 
-func (m *UserAppDataMapper) ToDalEntity(domainEntity *entity.User) (*dto.UserDTO, error) {
+func (m *UserReqDataMapper) ToDalEntity(domainEntity *entity.User) (*dto.UserDTO, error) {
 	return &dto.UserDTO{
 		Id:        domainEntity.Id,
 		FirstName: domainEntity.FirstName,

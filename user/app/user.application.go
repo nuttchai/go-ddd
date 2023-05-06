@@ -10,13 +10,13 @@ import (
 
 type UserApplicationService struct {
 	userService       service.IUserService
-	userAppDataMapper cmapper.IDataMapper[entity.User, dto.UserDTO]
+	UserReqDataMapper cmapper.IDataMapper[entity.User, dto.UserDTO]
 }
 
-func NewUserApplicationService(userService service.IUserService, userAppDataMapper cmapper.IDataMapper[entity.User, dto.UserDTO]) IUserApplicationService {
+func NewUserApplicationService(userService service.IUserService, UserReqDataMapper cmapper.IDataMapper[entity.User, dto.UserDTO]) IUserApplicationService {
 	return &UserApplicationService{
 		userService:       userService,
-		userAppDataMapper: userAppDataMapper,
+		UserReqDataMapper: UserReqDataMapper,
 	}
 }
 
@@ -27,7 +27,7 @@ func (a *UserApplicationService) FindUserById(payload *dto.FindUserByIdDTO) *api
 		return &api.APIResponse{APIError: jsonErr}
 	}
 
-	userDTO, err := a.userAppDataMapper.ToDalEntity(user)
+	userDTO, err := a.UserReqDataMapper.ToDalEntity(user)
 	if err != nil {
 		jsonErr := api.InternalServerError(err)
 		return &api.APIResponse{APIError: jsonErr}
