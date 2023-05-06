@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/nuttchai/go-ddd/common/logger"
-	user "github.com/nuttchai/go-ddd/internal/config"
+	user "github.com/nuttchai/go-ddd/internal/server/config"
 )
 
 func main() {
