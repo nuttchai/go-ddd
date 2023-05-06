@@ -7,7 +7,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func LoadEnv(filename string) {
+func LoadEnvFile(filename string) {
 	if err := godotenv.Load(filename); err != nil {
 		msg := fmt.Sprintf("Error loading %s file", filename)
 		log.Println(msg)

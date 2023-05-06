@@ -16,7 +16,7 @@ func DecodeDTO(e echo.Context, ptr any) error {
 		return errors.New(msg)
 	}
 
-	if err := validator.ValidateStruct(ptr); err != nil {
+	if _, err := validator.IsValidStruct(ptr); err != nil {
 		msg := fmt.Sprintf("validating dto error: %s", err.Error())
 		return errors.New(msg)
 	}

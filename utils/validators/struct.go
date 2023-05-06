@@ -8,6 +8,9 @@ func init() {
 	validate = validator.New()
 }
 
-func ValidateStruct(s interface{}) error {
-	return validate.Struct(s)
+func IsValidStruct(s interface{}) (bool, error) {
+	if err := validate.Struct(s); err != nil {
+		return false, err
+	}
+	return true, nil
 }

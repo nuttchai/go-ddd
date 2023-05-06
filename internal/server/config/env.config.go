@@ -16,7 +16,7 @@ func initEnv() error {
 	}
 
 	envDir := env.GetEnv("ENV_PATH", envDefaultDir)
-	env.LoadEnv(envDir)
+	env.LoadEnvFile(envDir)
 
 	dbType := env.GetEnv("DB_TYPE", "postgres")
 	dbUser := env.GetEnv("APP_DB_USER", "postgres")
