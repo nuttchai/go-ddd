@@ -2,10 +2,12 @@ package main
 
 import (
 	"github.com/nuttchai/go-ddd/common/logger"
-	user "github.com/nuttchai/go-ddd/user/http/server"
+	user "github.com/nuttchai/go-ddd/user/config"
 )
 
 func main() {
-	logger.App.Log("Start client...")
+	logger := logger.NewLogger()
+	logger.Log("Starting server...")
+
 	user.InitServer()
 }
