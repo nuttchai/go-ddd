@@ -3,7 +3,7 @@ package controller
 import (
 	"github.com/labstack/echo"
 	"github.com/nuttchai/go-ddd/common/api"
-	application "github.com/nuttchai/go-ddd/user/app"
+	application "github.com/nuttchai/go-ddd/user/application"
 	dto "github.com/nuttchai/go-ddd/user/dtos"
 )
 

@@ -13,7 +13,7 @@ func GetEnv(key, defaultValue string) string {
 	return value
 }
 
-func GetDefaultEnvDir(appEnv string) (string, error) {
+func GetDefaultEnvFileDirectoryPath(appEnv string) (string, error) {
 	rootDir, err := os.Getwd()
 	if err != nil {
 		return "", err

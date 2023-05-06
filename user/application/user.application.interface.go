@@ -1,4 +1,4 @@
-package app
+package application
 
 import (
 	api "github.com/nuttchai/go-ddd/common/api"

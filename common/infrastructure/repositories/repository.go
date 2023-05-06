@@ -4,7 +4,7 @@ import (
 	"errors"
 
 	constant "github.com/nuttchai/go-ddd/common/constants"
-	mapper "github.com/nuttchai/go-ddd/common/infra/data-mappers"
+	mapper "github.com/nuttchai/go-ddd/common/infrastructure/data-mappers"
 	"gorm.io/gorm"
 )
 

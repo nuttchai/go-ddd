@@ -1,8 +1,8 @@
-package app
+package application
 
 import (
 	api "github.com/nuttchai/go-ddd/common/api"
-	cmapper "github.com/nuttchai/go-ddd/common/infra/data-mappers"
+	cmapper "github.com/nuttchai/go-ddd/common/infrastructure/data-mappers"
 	entity "github.com/nuttchai/go-ddd/user/domain/entities"
 	service "github.com/nuttchai/go-ddd/user/domain/services"
 	dto "github.com/nuttchai/go-ddd/user/dtos"

@@ -3,12 +3,12 @@ package repository
 import (
 	"errors"
 
-	cmapper "github.com/nuttchai/go-ddd/common/infra/data-mappers"
-	crepo "github.com/nuttchai/go-ddd/common/infra/repositories"
+	cmapper "github.com/nuttchai/go-ddd/common/infrastructure/data-mappers"
+	crepo "github.com/nuttchai/go-ddd/common/infrastructure/repositories"
 	constant "github.com/nuttchai/go-ddd/user/domain/constants"
 	entity "github.com/nuttchai/go-ddd/user/domain/entities"
 	irepo "github.com/nuttchai/go-ddd/user/domain/repositories"
-	model "github.com/nuttchai/go-ddd/user/infra/models"
+	model "github.com/nuttchai/go-ddd/user/infrastructure/models"
 	"gorm.io/gorm"
 )
 
