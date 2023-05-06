@@ -3,9 +3,9 @@ package application
 import (
 	http "github.com/nuttchai/go-ddd/common/http"
 	cmapper "github.com/nuttchai/go-ddd/common/infrastructure/data-mappers"
-	entity "github.com/nuttchai/go-ddd/user/domain/entities"
-	service "github.com/nuttchai/go-ddd/user/domain/services"
-	dto "github.com/nuttchai/go-ddd/user/dtos"
+	entity "github.com/nuttchai/go-ddd/internal/domain/entities"
+	service "github.com/nuttchai/go-ddd/internal/domain/services"
+	dto "github.com/nuttchai/go-ddd/internal/dtos"
 )
 
 type UserApplicationService struct {

@@ -3,9 +3,9 @@ package service
 import (
 	"errors"
 
-	constant "github.com/nuttchai/go-ddd/user/domain/constants"
-	entity "github.com/nuttchai/go-ddd/user/domain/entities"
-	repo "github.com/nuttchai/go-ddd/user/domain/repositories"
+	constant "github.com/nuttchai/go-ddd/internal/domain/constants"
+	entity "github.com/nuttchai/go-ddd/internal/domain/entities"
+	repo "github.com/nuttchai/go-ddd/internal/domain/repositories"
 )
 
 type UserService struct {

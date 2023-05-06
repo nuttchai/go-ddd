@@ -2,12 +2,12 @@ package config
 
 import (
 	"github.com/labstack/echo"
-	"github.com/nuttchai/go-ddd/user/application"
-	service "github.com/nuttchai/go-ddd/user/domain/services"
-	mapper "github.com/nuttchai/go-ddd/user/infrastructure/data-mappers"
-	repository "github.com/nuttchai/go-ddd/user/infrastructure/repositories"
-	controller "github.com/nuttchai/go-ddd/user/presentation/controllers"
-	router "github.com/nuttchai/go-ddd/user/presentation/routers"
+	"github.com/nuttchai/go-ddd/internal/application"
+	service "github.com/nuttchai/go-ddd/internal/domain/services"
+	mapper "github.com/nuttchai/go-ddd/internal/infrastructure/data-mappers"
+	repository "github.com/nuttchai/go-ddd/internal/infrastructure/repositories"
+	controller "github.com/nuttchai/go-ddd/internal/presentation/controllers"
+	router "github.com/nuttchai/go-ddd/internal/presentation/routers"
 )
 
 func initApp(e *echo.Echo) error {

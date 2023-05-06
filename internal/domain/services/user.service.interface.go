@@ -1,6 +1,6 @@
 package service
 
-import entity "github.com/nuttchai/go-ddd/user/domain/entities"
+import entity "github.com/nuttchai/go-ddd/internal/domain/entities"
 
 type IUserService interface {
 	FindOneById(id string) (*entity.User, error)

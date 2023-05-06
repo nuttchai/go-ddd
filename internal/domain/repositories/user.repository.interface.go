@@ -1,7 +1,7 @@
 package repository
 
 import (
-	entity "github.com/nuttchai/go-ddd/user/domain/entities"
+	entity "github.com/nuttchai/go-ddd/internal/domain/entities"
 )
 
 type IUserRepository interface {

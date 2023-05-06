@@ -3,7 +3,7 @@ package entity
 import (
 	"regexp"
 
-	value_object "github.com/nuttchai/go-ddd/user/domain/value-objects"
+	value_object "github.com/nuttchai/go-ddd/internal/domain/value-objects"
 )
 
 type User struct {

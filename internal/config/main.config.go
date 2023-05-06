@@ -5,7 +5,7 @@ import (
 
 	"github.com/labstack/echo"
 	middleware "github.com/nuttchai/go-ddd/common/middlewares"
-	app "github.com/nuttchai/go-ddd/user/config/shared"
+	app "github.com/nuttchai/go-ddd/internal/config/shared"
 )
 
 func InitServer() {

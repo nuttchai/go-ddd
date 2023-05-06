@@ -3,8 +3,8 @@ package controller
 import (
 	"github.com/labstack/echo"
 	http "github.com/nuttchai/go-ddd/common/http"
-	application "github.com/nuttchai/go-ddd/user/application"
-	dto "github.com/nuttchai/go-ddd/user/dtos"
+	application "github.com/nuttchai/go-ddd/internal/application"
+	dto "github.com/nuttchai/go-ddd/internal/dtos"
 )
 
 type UserController struct {

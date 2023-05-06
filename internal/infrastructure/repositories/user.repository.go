@@ -5,10 +5,10 @@ import (
 
 	cmapper "github.com/nuttchai/go-ddd/common/infrastructure/data-mappers"
 	crepo "github.com/nuttchai/go-ddd/common/infrastructure/repositories"
-	constant "github.com/nuttchai/go-ddd/user/domain/constants"
-	entity "github.com/nuttchai/go-ddd/user/domain/entities"
-	irepo "github.com/nuttchai/go-ddd/user/domain/repositories"
-	model "github.com/nuttchai/go-ddd/user/infrastructure/models"
+	constant "github.com/nuttchai/go-ddd/internal/domain/constants"
+	entity "github.com/nuttchai/go-ddd/internal/domain/entities"
+	irepo "github.com/nuttchai/go-ddd/internal/domain/repositories"
+	model "github.com/nuttchai/go-ddd/internal/infrastructure/models"
 	"gorm.io/gorm"
 )
 
