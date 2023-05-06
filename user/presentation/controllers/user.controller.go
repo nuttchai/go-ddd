@@ -2,7 +2,7 @@ package controller
 
 import (
 	"github.com/labstack/echo"
-	"github.com/nuttchai/go-ddd/common/api"
+	http "github.com/nuttchai/go-ddd/common/http"
 	application "github.com/nuttchai/go-ddd/user/application"
 	dto "github.com/nuttchai/go-ddd/user/dtos"
 )
@@ -21,7 +21,7 @@ func (c *UserController) FindUserById(e echo.Context) error {
 	id := e.Param("id")
 	payload, err := dto.NewFindUserByIdDTO(id)
 	if err != nil {
-		jsonErr := api.BadRequestError(err)
+		jsonErr := http.BadRequestError(err)
 		return e.JSON(jsonErr.Status, jsonErr)
 	}
 

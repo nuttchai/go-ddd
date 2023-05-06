@@ -1,7 +1,7 @@
 package application
 
 import (
-	api "github.com/nuttchai/go-ddd/common/api"
+	http "github.com/nuttchai/go-ddd/common/http"
 	cmapper "github.com/nuttchai/go-ddd/common/infrastructure/data-mappers"
 	entity "github.com/nuttchai/go-ddd/user/domain/entities"
 	service "github.com/nuttchai/go-ddd/user/domain/services"
@@ -20,19 +20,19 @@ func NewUserApplicationService(userService service.IUserService, UserReqDataMapp
 	}
 }
 
-func (a *UserApplicationService) FindUserById(payload *dto.FindUserByIdDTO) *api.APIResponse {
+func (a *UserApplicationService) FindUserById(payload *dto.FindUserByIdDTO) *http.APIResponse {
 	user, err := a.userService.FindOneById(payload.Id)
 	if err != nil {
-		jsonErr := api.BadRequestError(err)
-		return &api.APIResponse{APIError: jsonErr}
+		jsonErr := http.BadRequestError(err)
+		return &http.APIResponse{APIError: jsonErr}
 	}
 
 	userDTO, err := a.UserReqDataMapper.ToDalEntity(user)
 	if err != nil {
-		jsonErr := api.InternalServerError(err)
-		return &api.APIResponse{APIError: jsonErr}
+		jsonErr := http.InternalServerError(err)
+		return &http.APIResponse{APIError: jsonErr}
 	}
 
-	jsonOk := api.SuccessResponse(userDTO)
-	return &api.APIResponse{APISuccess: jsonOk}
+	jsonOk := http.SuccessResponse(userDTO)
+	return &http.APIResponse{APISuccess: jsonOk}
 }
