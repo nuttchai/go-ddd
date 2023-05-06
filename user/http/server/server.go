@@ -17,7 +17,6 @@ func InitServer() {
 	}
 
 	userRepo := repository.NewUserRepository(db, &mapper.UserDataMapper{})
-	userRepo.FindOneByEmail("")
 	userSvc := service.NewUserService(userRepo)
 	userApp := application.NewUserApplicationService(userSvc, &mapper.UserReqDataMapper{})
 	_ = controller.NewUserController(userApp)
