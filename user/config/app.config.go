@@ -1,59 +1,26 @@
 package config
 
 import (
-	"flag"
-	"fmt"
-
-	types "github.com/nuttchai/go-ddd/types"
-	env "github.com/nuttchai/go-ddd/utils/env"
+	"github.com/labstack/echo"
+	"github.com/nuttchai/go-ddd/user/application"
+	service "github.com/nuttchai/go-ddd/user/domain/services"
+	mapper "github.com/nuttchai/go-ddd/user/infrastructure/data-mappers"
+	repository "github.com/nuttchai/go-ddd/user/infrastructure/repositories"
+	controller "github.com/nuttchai/go-ddd/user/presentation/controllers"
+	router "github.com/nuttchai/go-ddd/user/presentation/routers"
 )
 
-var AppConfig *types.AppConfig
-
-func init() {
-	AppConfig = &types.AppConfig{}
-}
-
-func initAppConfig() error {
-	// Load Environment Variables
-	appEnv := env.GetEnv("APP_ENV", "development")
-	envDefaultDir, err := env.GetDefaultEnvFileDirectoryPath(appEnv)
+func initApp(e *echo.Echo) error {
+	db, err := getDB()
 	if err != nil {
 		return err
 	}
 
-	envDir := env.GetEnv("ENV_PATH", envDefaultDir)
-	env.LoadEnv(envDir)
+	userRepo := repository.NewUserRepository(db, &mapper.UserDataMapper{})
+	userSvc := service.NewUserService(userRepo)
+	userApp := application.NewUserApplicationService(userSvc, &mapper.UserReqDataMapper{})
+	userHttp := controller.NewUserController(userApp)
 
-	dbType := env.GetEnv("DB_TYPE", "postgres")
-	dbUser := env.GetEnv("APP_DB_USER", "postgres")
-	dbPass := env.GetEnv("APP_DB_PASS", "postgres")
-	dbHost := env.GetEnv("DB_HOST", "localhost")
-	dbPort := env.GetEnv("DB_PORT", "5432")
-	dbName := env.GetEnv("APP_DB_NAME", "test")
-	dbDriver := env.GetEnv("DB_DRIVER", "postgres")
-	port := env.GetEnv("APP_PORT", "8000")
-	dbConnStr := fmt.Sprintf(
-		"%s://%s:%s@%s:%s/%s?sslmode=disable",
-		dbType,
-		dbUser,
-		dbPass,
-		dbHost,
-		dbPort,
-		dbName,
-	)
-
-	// Get Value from Command Line if Exist
-	var env, serverPort, dsn, driver string
-	flag.StringVar(&env, "env", appEnv, "Application Environment")
-	flag.StringVar(&serverPort, "port", port, "Server Listening Port")
-	flag.StringVar(&dsn, "dsn", dbConnStr, "Data Source Name")
-	flag.StringVar(&driver, "driver", dbDriver, "Database Driver")
-	flag.Parse()
-
-	// Set Value to AppConfig
-	AppConfig.SetENV(env)
-	AppConfig.SetRESTConfig(serverPort)
-	AppConfig.SetDBConfig(dsn, driver)
+	router.InitUserRouter(e, userHttp)
 	return nil
 }

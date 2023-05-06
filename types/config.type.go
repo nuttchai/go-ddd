@@ -7,6 +7,7 @@ type RESTConfig struct {
 type DBConfig struct {
 	dsn    string
 	driver string
+	db     interface{}
 }
 
 type AppConfig struct {
@@ -31,6 +32,10 @@ func (db *DBConfig) GetDriver() string {
 	return db.driver
 }
 
+func (db *DBConfig) GetDB() interface{} {
+	return db.db
+}
+
 func (c *AppConfig) GetENV() string {
 	return c.env
 }
@@ -39,9 +44,13 @@ func (c *AppConfig) SetRESTConfig(port string) {
 	c.rest.port = port
 }
 
-func (c *AppConfig) SetDBConfig(dsn, driver string) {
+func (c *AppConfig) SetDBMetaData(dsn, driver string) {
 	c.db.dsn = dsn
 	c.db.driver = driver
+}
+
+func (c *AppConfig) SetDBInstance(db interface{}) {
+	c.db.db = db
 }
 
 func (c *AppConfig) SetENV(env string) {
