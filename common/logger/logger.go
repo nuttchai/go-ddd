@@ -6,21 +6,26 @@ import (
 	"os"
 )
 
-type Console struct {
-	Logger      *log.Logger
-	ErrorLogger *log.Logger
+type Logger struct {
+	Info  *log.Logger
+	Error *log.Logger
 }
 
-var App *Console
+func NewLogger(domain ...string) ILogger {
+	domainPrefix := "APP"
+	if len(domain) > 0 {
+		domainPrefix = domain[0]
+	}
 
-func init() {
-	App = &Console{
-		Logger:      log.New(os.Stdout, "APP_LOG: ", log.Ldate|log.Ltime),
-		ErrorLogger: log.New(os.Stdout, "APP_ERROR_LOG: ", log.Ldate|log.Ltime),
+	infoPrefix := domainPrefix + "_LOG: "
+	errorPrefix := domainPrefix + "_ERROR_LOG: "
+	return &Logger{
+		Info:  log.New(os.Stdout, infoPrefix, log.Ldate|log.Ltime),
+		Error: log.New(os.Stdout, errorPrefix, log.Ldate|log.Ltime),
 	}
 }
 
-func (s *Console) Log(messages ...any) {
+func (s *Logger) Log(messages ...any) {
 	var logMsg string
 	for index, message := range messages {
 		if index == 0 {
@@ -30,14 +35,14 @@ func (s *Console) Log(messages ...any) {
 		logMsg += fmt.Sprintf(" %v", message)
 	}
 
-	s.Logger.Println(logMsg)
+	s.Info.Println(logMsg)
 }
 
-func (s *Console) Logf(message string, options ...any) {
-	s.Logger.Printf(message, options...)
+func (s *Logger) Logf(message string, options ...any) {
+	s.Info.Printf(message, options...)
 }
 
-func (s *Console) Fatal(messages ...any) {
+func (s *Logger) Fatal(messages ...any) {
 	var fatalMsg string
 	for index, message := range messages {
 		if index == 0 {
@@ -47,9 +52,9 @@ func (s *Console) Fatal(messages ...any) {
 		fatalMsg += fmt.Sprintf(" %v", message)
 	}
 
-	s.ErrorLogger.Fatal(fatalMsg)
+	s.Error.Fatal(fatalMsg)
 }
 
-func (s *Console) Fatalf(message string, options ...any) {
-	s.ErrorLogger.Fatalf(message, options...)
+func (s *Logger) Fatalf(message string, options ...any) {
+	s.Error.Fatalf(message, options...)
 }
