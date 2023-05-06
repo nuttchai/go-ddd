@@ -6,7 +6,14 @@ import (
 	"github.com/labstack/echo"
 	middleware "github.com/nuttchai/go-ddd/common/middlewares"
 	app "github.com/nuttchai/go-ddd/internal/config/shared"
+	types "github.com/nuttchai/go-ddd/types"
 )
+
+var AppConfig *types.AppConfig
+
+func init() {
+	AppConfig = &types.AppConfig{}
+}
 
 func InitServer() {
 	// Add the Configuration into ApiConfig

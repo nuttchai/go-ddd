@@ -48,5 +48,6 @@ func initEnv() error {
 	AppConfig.SetENV(env)
 	AppConfig.SetRESTConfig(serverPort)
 	AppConfig.SetDBMetaData(dsn, driver)
+
 	return nil
 }
