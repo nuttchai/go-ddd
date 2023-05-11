@@ -1,9 +1,6 @@
 package repository
 
 import (
-	"errors"
-
-	constant "github.com/nuttchai/go-ddd/common/constants"
 	mapper "github.com/nuttchai/go-ddd/common/infrastructure/data-mappers"
 	"gorm.io/gorm"
 )
@@ -29,19 +26,11 @@ func (r *Repository[TDomainEntity, TDalEntity]) FindOneById(id string) (*TDomain
 }
 
 func (r *Repository[TDomainEntity, TDalEntity]) Save(entity *TDomainEntity) error {
-	isExisted, err := r.IsExisted(entity)
-	if err != nil {
-		return err
-	}
-	if isExisted {
-		return errors.New(constant.ItemAlreadyExisted)
-	}
-
+	isExisted := r.IsExisted(entity)
 	dalEntity := r.dataMapper.ToDalEntity(entity)
-	if err != nil {
-		return err
+	if isExisted {
+		return r.queryAdapter.Model(&dalEntity).Updates(dalEntity).Error
 	}
-
 	return r.queryAdapter.Save(dalEntity).Error
 }
 
@@ -53,11 +42,10 @@ func (r *Repository[TDomainEntity, TDalEntity]) Delete(id string) error {
 	return nil
 }
 
-func (r *Repository[TDomainEntity, TDalEntity]) IsExisted(entity *TDomainEntity) (bool, error) {
+func (r *Repository[TDomainEntity, TDalEntity]) IsExisted(entity *TDomainEntity) bool {
 	dalEntity := r.dataMapper.ToDalEntity(entity)
 	if dbResult := r.queryAdapter.First(dalEntity); dbResult.RowsAffected > 0 {
-		return false, nil
+		return false
 	}
-
-	return true, nil
+	return true
 }
