@@ -9,7 +9,7 @@ type IUserRepository interface {
 	Save(entity *entity.User) error
 	Update(entity *entity.User) error
 	Delete(id string) error
-	IsExisted(entity *entity.User) (bool, error)
+	IsExisted(entity *entity.User) bool
 	UpdateFirstNameIfIdExist(id, firstName string) error
 	FindOneByEmail(email string) (*entity.User, error)
 }
