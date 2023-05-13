@@ -6,7 +6,7 @@ import (
 	"github.com/labstack/echo"
 	middleware "github.com/nuttchai/go-ddd/common/middlewares"
 	app "github.com/nuttchai/go-ddd/internal/http/client/shared"
-	types "github.com/nuttchai/go-ddd/types"
+	types "github.com/nuttchai/go-ddd/internal/http/client/types"
 )
 
 var AppConfig *types.AppConfig
