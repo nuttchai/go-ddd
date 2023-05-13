@@ -9,8 +9,7 @@ import (
 type UserDataMapper struct{}
 
 func (m *UserDataMapper) ToDomainEntity(dalEntity *model.User) *entity.User {
-	return &entity.User{
-		Id:        dalEntity.Id,
+	props := &entity.UserProps{
 		FirstName: dalEntity.FirstName,
 		LastName:  dalEntity.LastName,
 		Email:     dalEntity.Email,
@@ -21,6 +20,8 @@ func (m *UserDataMapper) ToDomainEntity(dalEntity *model.User) *entity.User {
 			ZipCode: dalEntity.Address.ZipCode,
 		},
 	}
+	return entity.NewUser(props, dalEntity.Id)
+
 }
 
 func (m *UserDataMapper) ToDalEntity(domainEntity *entity.User) *model.User {
