@@ -18,7 +18,7 @@ func initApp(e *echo.Echo) error {
 
 	userRepo := repository.NewUserRepository(db, &mapper.UserDataMapper{})
 	userSvc := service.NewUserService(userRepo)
-	userApp := application.NewUserApplicationService(userSvc, &mapper.UserReqDataMapper{})
+	userApp := application.NewUserApplicationService(userSvc, &mapper.UserRequestDataMapper{})
 	userHttp := controller.NewUserController(userApp)
 
 	router.InitUserRouter(e, userHttp)

@@ -6,11 +6,10 @@ import (
 	dto "github.com/nuttchai/go-ddd/internal/dtos"
 )
 
-type UserReqDataMapper struct{}
+type UserRequestDataMapper struct{}
 
-func (m *UserReqDataMapper) ToDomainEntity(dalEntity *dto.UserDTO) *entity.User {
-	return &entity.User{
-		Id:        dalEntity.Id,
+func (m *UserRequestDataMapper) ToDomainEntity(dalEntity *dto.UserDTO) *entity.User {
+	props := &entity.UserProps{
 		FirstName: dalEntity.FirstName,
 		LastName:  dalEntity.LastName,
 		Email:     dalEntity.Email,
@@ -21,9 +20,11 @@ func (m *UserReqDataMapper) ToDomainEntity(dalEntity *dto.UserDTO) *entity.User 
 			ZipCode: dalEntity.Address.ZipCode,
 		},
 	}
+	return entity.NewUser(props, dalEntity.Id)
+
 }
 
-func (m *UserReqDataMapper) ToDalEntity(domainEntity *entity.User) *dto.UserDTO {
+func (m *UserRequestDataMapper) ToDalEntity(domainEntity *entity.User) *dto.UserDTO {
 	return &dto.UserDTO{
 		Id:        domainEntity.Id,
 		FirstName: domainEntity.FirstName,
