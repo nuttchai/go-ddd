@@ -16,26 +16,50 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- Create User Table
 CREATE TABLE "user" (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     first_name VARCHAR(25) NOT NULL
     last_name VARCHAR(25) NOT NULL
     email VARCHAR(50) NOT NULL
-    address 
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    address_id UUID REFERENCES "address" (id)
 );
 
--- Insert User Data 
-INSERT INTO "user" (username) VALUES 
-    ('User 1'),
-    ('User 2'),
-    ('User 3'),
-    ('User 4'),
-    ('User 5');
+-- Create Address Table
+CREATE TABLE "address" (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    street VARCHAR(30) NOT NULL
+    city VARCHAR(30) NOT NULL
+    state VARCHAR(5) NOT NULL
+    zip_code VARCHAR(5) NOT NULL
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 
--- Insert Sample Data
-INSERT INTO "sample" (name, description, owner_id) VALUES 
-    ('Sample 1', 'Sample 1 Description', 1),
-    ('Sample 2', 'Sample 2 Description', 2),
-    ('Sample 3', 'Sample 3 Description', 2),
-    ('Sample 4', 'Sample 4 Description', 3),
-    ('Sample 5', 'Sample 5 Description', 4);
+-- Create a Function to Update Timestamp at "updated_at" Column
+CREATE OR REPLACE FUNCTION update_timestamp_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = now();
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
 
+-- Create a Trigger to Update the Given Tables Timestamp when their Rows are Updated
+CREATE TRIGGER update_user_task_updated_at
+    BEFORE UPDATE ON "user"
+    FOR EACH ROW
+EXECUTE PROCEDURE update_timestamp_updated_at();
+
+CREATE TRIGGER update_address_task_updated_at
+    BEFORE UPDATE ON "address"
+    FOR EACH ROW
+EXECUTE PROCEDURE update_timestamp_updated_at();
+
+-- Insert Address Data
+INSERT INTO "address" (street, city, state, zip_code) VALUES
+    ('99/1 Street 1', 'Bangkok', 'AK', '10105');
+
+-- Insert User Data
+INSERT INTO "user" (first_name, last_name, email, address_id) VALUES
+    ('John', 'Doe', 'john@mail.com', (SELECT id FROM "address" WHERE street = '99/1 Street 1'));
