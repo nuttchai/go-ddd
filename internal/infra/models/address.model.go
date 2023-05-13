@@ -1,10 +1,15 @@
 package model
 
+import (
+	"time"
+)
+
 type Address struct {
-	Id      string `json:"id"`
-	Street  string `json:"street"`
-	City    string `json:"city"`
-	State   string `json:"state"`
-	ZipCode string `json:"zip_code"`
-	UserId  string `json:"user_id"`
+	Id        string    `gorm:"primaryKey" json:"id"`
+	Street    string    `gorm:"type:varchar(30);size:30;column:street;" json:"street"`
+	City      string    `gorm:"type:varchar(30);size:30;column:city;" json:"city"`
+	State     string    `gorm:"type:varchar(5);size:5;column:state;" json:"state"`
+	ZipCode   string    `gorm:"type:varchar(5);size:5;column:zip_code;" json:"zip_code"`
+	CreatedAt time.Time `gorm:"autoCreateTime:true;column:created_at;" json:"created_at"`
+	UpdatedAt time.Time `gorm:"autoUpdateTime:true;column:updated_at;" json:"updated_at"`
 }
