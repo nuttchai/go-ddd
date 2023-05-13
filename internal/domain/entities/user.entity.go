@@ -1,10 +1,9 @@
 package entity
 
 import (
-	"regexp"
-
 	"github.com/google/uuid"
 	value_object "github.com/nuttchai/go-ddd/internal/domain/value-objects"
+	validator "github.com/nuttchai/go-ddd/utils/validators"
 )
 
 type UserProps struct {
@@ -37,14 +36,10 @@ func NewUser(props *UserProps, id ...string) *User {
 	}
 }
 
-func (u *User) IsEmailValid() bool {
-	emailRegex := `^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$`
-	emailPattern := regexp.MustCompile(emailRegex)
-	return emailPattern.MatchString(u.Email)
-}
-
 func (u *User) IsUserValid() bool {
-	if u.FirstName == "" || u.LastName == "" || u.IsEmailValid() {
+	isNameIncluded := u.FirstName != "" && u.LastName != ""
+	isEmailValid := validator.IsEmailValid(u.Email)
+	if !isNameIncluded || !isEmailValid {
 		return false
 	}
 	return true

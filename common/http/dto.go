@@ -1,25 +1,19 @@
 package api
 
 import (
-	"encoding/json"
-	"errors"
-	"fmt"
-
 	"github.com/labstack/echo"
-	validator "github.com/nuttchai/go-ddd/utils/validators"
 )
 
-func DecodeDTO(e echo.Context, ptr any) error {
-	decoder := json.NewDecoder(e.Request().Body)
-	if err := decoder.Decode(ptr); err != nil {
-		msg := fmt.Sprintf("decoding json error: %s", err.Error())
-		return errors.New(msg)
-	}
+type DTO interface {
+	IsDTOValid() (bool, error)
+}
 
-	if _, err := validator.IsValidStruct(ptr); err != nil {
-		msg := fmt.Sprintf("validating dto error: %s", err.Error())
-		return errors.New(msg)
+func DecodeDTO(e echo.Context, dto DTO) error {
+	if err := e.Bind(&dto); err != nil {
+		return err
 	}
-
+	if ok, err := dto.IsDTOValid(); !ok {
+		return err
+	}
 	return nil
 }

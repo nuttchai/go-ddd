@@ -6,5 +6,5 @@ import (
 )
 
 func InitUserRouter(e *echo.Echo, handler controller.IUserController) {
-	e.GET(buildPath("/internal/:id"), handler.FindUserById)
+	e.GET(buildPath("user/:id"), handler.FindUserById)
 }
