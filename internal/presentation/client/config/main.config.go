@@ -5,7 +5,7 @@ import (
 
 	"github.com/labstack/echo"
 	middleware "github.com/nuttchai/go-ddd/common/middlewares"
-	app "github.com/nuttchai/go-ddd/internal/server/shared"
+	app "github.com/nuttchai/go-ddd/internal/presentation/client/shared"
 	types "github.com/nuttchai/go-ddd/types"
 )
 

@@ -3,7 +3,7 @@ package config
 import (
 	"errors"
 
-	constant "github.com/nuttchai/go-ddd/internal/server/constants"
+	constant "github.com/nuttchai/go-ddd/internal/presentation/client/constants"
 	context "github.com/nuttchai/go-ddd/utils/context"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
