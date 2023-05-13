@@ -2,7 +2,7 @@ package app
 
 import (
 	"github.com/nuttchai/go-ddd/common/logger"
-	constant "github.com/nuttchai/go-ddd/internal/presentation/client/constants"
+	constant "github.com/nuttchai/go-ddd/internal/http/client/constants"
 )
 
 var Logger logger.ILogger

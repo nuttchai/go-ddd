@@ -2,7 +2,7 @@ package application
 
 import (
 	http "github.com/nuttchai/go-ddd/common/http"
-	cmapper "github.com/nuttchai/go-ddd/common/infrastructure/data-mappers"
+	cmapper "github.com/nuttchai/go-ddd/common/infra/data-mappers"
 	entity "github.com/nuttchai/go-ddd/internal/domain/entities"
 	service "github.com/nuttchai/go-ddd/internal/domain/services"
 	dto "github.com/nuttchai/go-ddd/internal/dtos"

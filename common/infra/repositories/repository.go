@@ -1,7 +1,7 @@
 package repository
 
 import (
-	mapper "github.com/nuttchai/go-ddd/common/infrastructure/data-mappers"
+	mapper "github.com/nuttchai/go-ddd/common/infra/data-mappers"
 	"gorm.io/gorm"
 )
 
