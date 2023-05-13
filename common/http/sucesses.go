@@ -7,12 +7,12 @@ import (
 )
 
 type APISuccess struct {
-	Status  int         `json:"status"`
-	Message string      `json:"message"`
-	Result  interface{} `json:"result"`
+	Status  int    `json:"status"`
+	Message string `json:"message"`
+	Result  any    `json:"result"`
 }
 
-func SuccessResponse(result interface{}, message ...string) *APISuccess {
+func SuccessResponse(result any, message ...string) *APISuccess {
 	msg := constant.DefaultAPISuccessMsg
 	if len(message) > 0 {
 		msg = message[0]

@@ -5,7 +5,7 @@ type APIResponse struct {
 	APIError   *APIError
 }
 
-func (r *APIResponse) Value() interface{} {
+func (r *APIResponse) Value() any {
 	if r.APIError != nil {
 		return *r.APIError
 	}
