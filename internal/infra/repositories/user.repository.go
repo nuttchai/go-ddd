@@ -1,11 +1,8 @@
 package repository
 
 import (
-	"errors"
-
 	cmapper "github.com/nuttchai/go-ddd/common/infra/data-mappers"
 	crepo "github.com/nuttchai/go-ddd/common/infra/repositories"
-	constant "github.com/nuttchai/go-ddd/internal/domain/constants"
 	entity "github.com/nuttchai/go-ddd/internal/domain/entities"
 	irepo "github.com/nuttchai/go-ddd/internal/domain/repositories"
 	model "github.com/nuttchai/go-ddd/internal/infra/models"
@@ -24,18 +21,6 @@ func NewUserRepository(queryAdapter *gorm.DB, dataMapper cmapper.IDataMapper[ent
 		queryAdapter: queryAdapter,
 		dataMapper:   dataMapper,
 	}
-}
-
-func (r *UserRepository) CreateUser(user *entity.User) error {
-	userDb, err := r.FindOneByEmail(user.Email)
-	if err != nil {
-		return err
-	}
-	if userDb != nil {
-		return errors.New(constant.EmailAlreadyExisted)
-	}
-
-	return r.Repository.Save(user)
 }
 
 func (r *UserRepository) UpdateFirstNameIfIdExist(id, firstName string) error {

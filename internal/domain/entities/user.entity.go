@@ -6,15 +6,24 @@ import (
 	validator "github.com/nuttchai/go-ddd/utils/validators"
 )
 
-type UserProps struct {
+type User struct {
+	Id        string               `json:"id"`
 	FirstName string               `json:"first_name"`
 	LastName  string               `json:"last_name"`
 	Email     string               `json:"email"`
 	Address   value_object.Address `json:"address"`
 }
 
-type User struct {
-	Id        string               `json:"id"`
+func (u *User) IsUserValid() bool {
+	isNameIncluded := u.FirstName != "" && u.LastName != ""
+	isEmailValid := validator.IsEmailValid(u.Email)
+	if !isNameIncluded || !isEmailValid {
+		return false
+	}
+	return true
+}
+
+type UserProps struct {
 	FirstName string               `json:"first_name"`
 	LastName  string               `json:"last_name"`
 	Email     string               `json:"email"`
@@ -34,13 +43,4 @@ func NewUser(props *UserProps, id ...string) *User {
 		Email:     props.Email,
 		Address:   props.Address,
 	}
-}
-
-func (u *User) IsUserValid() bool {
-	isNameIncluded := u.FirstName != "" && u.LastName != ""
-	isEmailValid := validator.IsEmailValid(u.Email)
-	if !isNameIncluded || !isEmailValid {
-		return false
-	}
-	return true
 }

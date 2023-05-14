@@ -7,4 +7,5 @@ import (
 
 type IUserApplicationService interface {
 	FindUserById(payload *dto.FindUserByIdDTO) *http.APIResponse
+	CreateUser(payload *dto.CreateUserDTO) *http.APIResponse
 }

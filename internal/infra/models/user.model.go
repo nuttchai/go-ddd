@@ -16,5 +16,5 @@ type User struct {
 	UpdatedAt time.Time `gorm:"autoUpdateTime:true;column:updated_at;"`
 
 	Address   Address `gorm:"foreignkey:AddressId"`
-	AddressId string
+	AddressId string  `gorm:"column:address_id;"`
 }

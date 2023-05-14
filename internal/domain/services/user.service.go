@@ -26,6 +26,12 @@ func (s *UserService) CreateUser(user *entity.User) error {
 	if isUserValid := user.IsUserValid(); !isUserValid {
 		return errors.New(constant.InvalidCreatedUser)
 	}
+	if userDb, err := s.userRepo.FindOneByEmail(user.Email); userDb != nil || err != nil {
+		if err != nil {
+			return err
+		}
+		return errors.New(constant.EmailAlreadyExisted)
+	}
 	return s.userRepo.Save(user)
 }
 

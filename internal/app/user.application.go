@@ -28,6 +28,26 @@ func (a *UserApplicationService) FindUserById(payload *dto.FindUserByIdDTO) *htt
 	}
 
 	userDTO := a.UserReqDataMapper.ToDalEntity(user)
-	jsonOk := http.SuccessResponse(userDTO)
+	jsonOk := http.SuccessResponse(userDTO, "User Found Successfully")
+	return &http.APIResponse{APISuccess: jsonOk}
+}
+
+func (a *UserApplicationService) CreateUser(payload *dto.CreateUserDTO) *http.APIResponse {
+	userDTO := &dto.UserDTO{
+		FirstName: payload.FirstName,
+		LastName:  payload.LastName,
+		Email:     payload.Email,
+		Address:   payload.Address,
+	}
+	user := a.UserReqDataMapper.ToDomainEntity(userDTO)
+	if err := a.userService.CreateUser(user); err != nil {
+		jsonErr := http.BadRequestError(err)
+		return &http.APIResponse{APIError: jsonErr}
+	}
+
+	jsonOk := http.SuccessResponse(&dto.AcknowledgeDTO{
+		Action:    "create_user",
+		IsSuccess: true,
+	}, "User Created Successfully")
 	return &http.APIResponse{APISuccess: jsonOk}
 }

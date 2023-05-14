@@ -2,9 +2,12 @@ package model
 
 import (
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type Address struct {
+	gorm.Model
 	Id        string    `gorm:"primaryKey" json:"id"`
 	Street    string    `gorm:"type:varchar(30);size:30;column:street;" json:"street"`
 	City      string    `gorm:"type:varchar(30);size:30;column:city;" json:"city"`

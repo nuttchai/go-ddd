@@ -7,4 +7,5 @@ import (
 
 func InitUserRouter(e *echo.Echo, handler controller.IUserController) {
 	e.GET(buildPath("user/:id"), handler.FindUserById)
+	e.POST(buildPath("user"), handler.CreateUser)
 }
