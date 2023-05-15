@@ -2,7 +2,7 @@ package application
 
 import (
 	http "github.com/nuttchai/go-ddd/common/http"
-	dto "github.com/nuttchai/go-ddd/internal/dtos"
+	dto "github.com/nuttchai/go-ddd/internal/shared/dtos"
 )
 
 type IUserApplicationService interface {

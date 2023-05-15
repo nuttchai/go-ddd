@@ -5,7 +5,7 @@ import (
 	api "github.com/nuttchai/go-ddd/common/http"
 	http "github.com/nuttchai/go-ddd/common/http"
 	application "github.com/nuttchai/go-ddd/internal/app"
-	dto "github.com/nuttchai/go-ddd/internal/dtos"
+	dto "github.com/nuttchai/go-ddd/internal/shared/dtos"
 )
 
 type UserController struct {

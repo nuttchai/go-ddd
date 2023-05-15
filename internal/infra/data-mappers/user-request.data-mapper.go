@@ -3,7 +3,7 @@ package data_mapper
 import (
 	entity "github.com/nuttchai/go-ddd/internal/domain/entities"
 	value_object "github.com/nuttchai/go-ddd/internal/domain/value-objects"
-	dto "github.com/nuttchai/go-ddd/internal/dtos"
+	dto "github.com/nuttchai/go-ddd/internal/shared/dtos"
 )
 
 type UserRequestDataMapper struct{}
