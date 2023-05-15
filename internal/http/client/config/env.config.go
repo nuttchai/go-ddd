@@ -23,7 +23,7 @@ func initEnv() error {
 	dbPass := env.GetEnv("APP_DB_PASS", "postgres")
 	dbHost := env.GetEnv("DB_HOST", "localhost")
 	dbPort := env.GetEnv("DB_PORT", "5432")
-	dbName := env.GetEnv("APP_DB_NAME", "test")
+	dbName := env.GetEnv("APP_DB_NAME", "userdb")
 	dbDriver := env.GetEnv("DB_DRIVER", "postgres")
 	port := env.GetEnv("APP_PORT", "8000")
 	dbConnStr := fmt.Sprintf(
