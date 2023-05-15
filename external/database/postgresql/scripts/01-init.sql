@@ -47,19 +47,19 @@ $$ language 'plpgsql';
 
 -- Create a Trigger to Update the Given Tables Timestamp when their Rows are Updated
 CREATE TRIGGER update_user_task_updated_at
-    BEFORE UPDATE ON "user"
+    BEFORE UPDATE ON "users"
     FOR EACH ROW
 EXECUTE PROCEDURE update_timestamp_updated_at();
 
 CREATE TRIGGER update_address_task_updated_at
-    BEFORE UPDATE ON "address"
+    BEFORE UPDATE ON "addresses"
     FOR EACH ROW
 EXECUTE PROCEDURE update_timestamp_updated_at();
 
 -- Insert Address Data
-INSERT INTO "address" (street, city, state, zip_code) VALUES
+INSERT INTO "addresses" (street, city, state, zip_code) VALUES
     ('99/1 Street 1', 'Bangkok', 'AK', '10105');
 
 -- Insert User Data
-INSERT INTO "user" (first_name, last_name, email, address_id) VALUES
-    ('John', 'Doe', 'john@mail.com', (SELECT id FROM "address" WHERE street = '99/1 Street 1'));
+INSERT INTO "users" (first_name, last_name, email, address_id) VALUES
+    ('John', 'Doe', 'john@mail.com', (SELECT id FROM "addresses" WHERE street = '99/1 Street 1'));
