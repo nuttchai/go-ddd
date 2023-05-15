@@ -36,7 +36,7 @@ func (r *UserRepository) UpdateFirstNameIfIdExist(id, firstName string) error {
 
 func (r *UserRepository) FindOneByEmail(email string) (*entity.User, error) {
 	userDAL := &model.User{Email: email}
-	if dbResult := r.queryAdapter.Find(&userDAL).First(&userDAL); dbResult.Error != nil {
+	if dbResult := r.queryAdapter.Where("email = ?", userDAL.Email).First(&userDAL); dbResult.Error != nil {
 		if dbResult.Error == gorm.ErrRecordNotFound {
 			return nil, nil
 		}
