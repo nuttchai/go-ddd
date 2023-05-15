@@ -22,7 +22,8 @@ CREATE TABLE "addresses" (
     state VARCHAR(5) NOT NULL,
     zip_code VARCHAR(5) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP
 );
 
 -- Create User Table
@@ -33,6 +34,7 @@ CREATE TABLE "users" (
     email VARCHAR(50) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP,
     address_id UUID REFERENCES "addresses" (id)
 );
 
