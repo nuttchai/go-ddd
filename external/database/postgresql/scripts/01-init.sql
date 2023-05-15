@@ -14,17 +14,6 @@ GRANT ALL PRIVILEGES ON DATABASE :"dbname" TO :"userdb";
 -- Create Extension and Install into Database
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- Create User Table
-CREATE TABLE "user" (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    first_name VARCHAR(25) NOT NULL,
-    last_name VARCHAR(25) NOT NULL,
-    email VARCHAR(50) NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    address_id UUID REFERENCES "address" (id)
-);
-
 -- Create Address Table
 CREATE TABLE "address" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -34,6 +23,17 @@ CREATE TABLE "address" (
     zip_code VARCHAR(5) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create User Table
+CREATE TABLE "user" (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    first_name VARCHAR(25) NOT NULL,
+    last_name VARCHAR(25) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    address_id UUID REFERENCES "address" (id)
 );
 
 -- Create a Function to Update Timestamp at "updated_at" Column
