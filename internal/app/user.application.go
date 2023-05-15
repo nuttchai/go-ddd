@@ -6,7 +6,6 @@ import (
 	entity "github.com/nuttchai/go-ddd/internal/domain/entities"
 	service "github.com/nuttchai/go-ddd/internal/domain/services"
 	dto "github.com/nuttchai/go-ddd/internal/shared/dtos"
-	app "github.com/nuttchai/go-ddd/internal/shared/logger"
 )
 
 type UserApplicationService struct {
@@ -41,7 +40,6 @@ func (a *UserApplicationService) CreateUser(payload *dto.CreateUserDTO) *http.AP
 		Address:   payload.Address,
 	}
 	user := a.UserReqDataMapper.ToDomainEntity(userDTO)
-	app.Logger.Log("user %+v", user)
 	if err := a.userService.CreateUser(user); err != nil {
 		jsonErr := http.BadRequestError(err)
 		return &http.APIResponse{APIError: jsonErr}
