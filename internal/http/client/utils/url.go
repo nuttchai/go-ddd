@@ -1,9 +1,9 @@
-package router
+package url
 
 const (
 	basePath = "/api/v1/"
 )
 
-func buildPath(path string) string {
+func BuildPath(path string) string {
 	return basePath + path
 }

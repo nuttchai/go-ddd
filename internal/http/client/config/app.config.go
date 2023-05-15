@@ -4,8 +4,8 @@ import (
 	"github.com/labstack/echo"
 	application "github.com/nuttchai/go-ddd/internal/app"
 	service "github.com/nuttchai/go-ddd/internal/domain/services"
+	router "github.com/nuttchai/go-ddd/internal/http/client/routers"
 	controller "github.com/nuttchai/go-ddd/internal/http/controllers"
-	router "github.com/nuttchai/go-ddd/internal/http/routers"
 	mapper "github.com/nuttchai/go-ddd/internal/infra/data-mappers"
 	repository "github.com/nuttchai/go-ddd/internal/infra/repositories"
 )
