@@ -27,13 +27,12 @@ func initDB() error {
 		return err
 	}
 
-	defer sqlDB.Close()
 	AppConfig.SetDBInstance(db)
 	return nil
 }
 
 func getDB() (*gorm.DB, error) {
-	dbInterface := AppConfig.GetDBConfig().GetDB()
+	dbInterface := AppConfig.GetDBConfig().GetDBInstance()
 	db, ok := dbInterface.(*gorm.DB)
 	if !ok {
 		return nil, errors.New(constant.InvalidDBTypeAssertion)

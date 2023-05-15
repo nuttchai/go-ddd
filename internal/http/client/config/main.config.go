@@ -36,6 +36,11 @@ func InitServer() {
 		app.Logger.Fatalf("Error Initializing the Application (Error: %s)", err.Error())
 	}
 
+	// Defer Closing the Database Connection
+	db, _ := getDB()
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
+
 	// Start Server
 	app.Logger.Logf("Starting Server...")
 	serverPort := fmt.Sprintf(":%s", AppConfig.GetRESTPort())
