@@ -1,18 +1,12 @@
 package env
 
 import (
-	"fmt"
-	"log"
-
 	"github.com/joho/godotenv"
 )
 
-func LoadEnvFile(filename string) {
+func LoadEnvFile(filename string) error {
 	if err := godotenv.Load(filename); err != nil {
-		msg := fmt.Sprintf("Error loading %s file", filename)
-		log.Println(msg)
+		return err
 	}
-
-	msg := fmt.Sprintf("Loaded %s file successfully", filename)
-	log.Println(msg)
+	return nil
 }
