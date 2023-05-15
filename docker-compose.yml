@@ -1,0 +1,53 @@
+version: "3.7"
+services:
+  db:
+    image: postgres:13.1
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root"]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    restart: always
+    container_name: db
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      APP_DB_USER: postgres
+      APP_DB_PASS: postgres
+      APP_DB_NAME: user
+    volumes:
+      - ./external/database/postgresql/volumes/data:/var/lib/postgresql/data
+      - ./external/database/postgresql/volumes/db_backup:/db_backup
+      - ./external/database/postgresql/scripts:/docker-entrypoint-initdb.d
+    ports:
+      - 5432:5432
+    networks:
+      - user_svc
+
+  # api:
+  #   container_name: api
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   ports:
+  #     - 8000:8000
+  #   environment:
+  #     APP_DB_NAME: user
+  #     APP_DB_USER: postgres
+  #     APP_DB_PASS: postgres
+  #     DB_TYPE: postgres
+  #     DB_DRIVER: postgres
+  #     DB_HOST: db
+  #     DB_PORT: 5432
+  #     APP_PORT: 8000
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #   links:
+  #     - db
+  #   networks:
+  #     - user_svc
+
+networks:
+  user_svc:
