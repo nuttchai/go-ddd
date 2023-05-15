@@ -6,7 +6,13 @@ import (
 	controller "github.com/nuttchai/go-ddd/internal/http/controllers"
 )
 
+var builder *url.UrlBuilder
+
+func init() {
+	builder = url.NewUrlBuilder("user")
+}
+
 func InitUserRouter(e *echo.Echo, handler controller.IUserController) {
-	e.GET(url.BuildPath("user/:id"), handler.FindUserById)
-	e.POST(url.BuildPath("user"), handler.CreateUser)
+	e.GET(builder.BuildPath("/:id"), handler.FindUserById)
+	e.POST(builder.BuildPath(), handler.CreateUser)
 }
