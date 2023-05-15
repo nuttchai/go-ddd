@@ -2,18 +2,18 @@ package data_mapper
 
 import (
 	entity "github.com/nuttchai/go-ddd/internal/domain/entities"
-	value_object "github.com/nuttchai/go-ddd/internal/domain/value-objects"
+	"github.com/nuttchai/go-ddd/internal/domain/props"
 	dto "github.com/nuttchai/go-ddd/internal/shared/dtos"
 )
 
 type UserRequestDataMapper struct{}
 
 func (m *UserRequestDataMapper) ToDomainEntity(dalEntity *dto.UserDTO) *entity.User {
-	props := &entity.UserProps{
+	props := &props.UserProps{
 		FirstName: dalEntity.FirstName,
 		LastName:  dalEntity.LastName,
 		Email:     dalEntity.Email,
-		Address: value_object.Address{
+		Address: props.AddressProps{
 			Street:  dalEntity.Address.Street,
 			City:    dalEntity.Address.City,
 			State:   dalEntity.Address.State,
@@ -21,7 +21,6 @@ func (m *UserRequestDataMapper) ToDomainEntity(dalEntity *dto.UserDTO) *entity.U
 		},
 	}
 	return entity.NewUser(props, dalEntity.Id)
-
 }
 
 func (m *UserRequestDataMapper) ToDalEntity(domainEntity *entity.User) *dto.UserDTO {
