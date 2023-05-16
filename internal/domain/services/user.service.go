@@ -39,7 +39,7 @@ func (s *UserService) UpdateUser(user *entity.User) error {
 	if isUserValid := user.IsUserValid(); !isUserValid {
 		return errors.New(constant.InvalidUpdatedUser)
 	}
-	return s.userRepo.Update(user)
+	return s.userRepo.Save(user)
 }
 
 func (s *UserService) UpdateFirstNameIfIdExist(id, firstName string) error {

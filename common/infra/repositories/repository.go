@@ -29,13 +29,11 @@ func (r *Repository[TDomainEntity, TDalEntity]) Save(entity *TDomainEntity) erro
 	isExisted := r.IsExisted(entity)
 	dalEntity := r.dataMapper.ToDalEntity(entity)
 	if isExisted {
-		return r.queryAdapter.Model(&dalEntity).Updates(dalEntity).Error
+		dbResult := r.queryAdapter.Model(&dalEntity).Updates(&dalEntity)
+		return dbResult.Error
 	}
-	return r.queryAdapter.Save(dalEntity).Error
-}
-
-func (r *Repository[TDomainEntity, TDalEntity]) Update(entity *TDomainEntity) error {
-	return nil
+	dbResult := r.queryAdapter.Save(&dalEntity)
+	return dbResult.Error
 }
 
 func (r *Repository[TDomainEntity, TDalEntity]) Delete(id string) error {
@@ -44,8 +42,5 @@ func (r *Repository[TDomainEntity, TDalEntity]) Delete(id string) error {
 
 func (r *Repository[TDomainEntity, TDalEntity]) IsExisted(entity *TDomainEntity) bool {
 	dalEntity := r.dataMapper.ToDalEntity(entity)
-	if dbResult := r.queryAdapter.First(dalEntity); dbResult.RowsAffected > 0 {
-		return false
-	}
-	return true
+	return r.queryAdapter.First(&dalEntity).RowsAffected > 0
 }
