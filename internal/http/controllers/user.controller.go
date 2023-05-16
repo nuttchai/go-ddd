@@ -20,7 +20,8 @@ func NewUserController(UserApplicationService application.IUserApplicationServic
 
 func (c *UserController) FindUserById(e echo.Context) error {
 	payload := new(dto.FindUserByIdDTO)
-	if err := api.DecodeDTO(e, payload); err != nil {
+	payload.ID = e.Param("id")
+	if ok, err := payload.IsDTOValid(); !ok {
 		jsonErr := http.BadRequestError(err)
 		return e.JSON(jsonErr.Status, jsonErr)
 	}
@@ -37,5 +38,17 @@ func (c *UserController) CreateUser(e echo.Context) error {
 	}
 
 	result := c.UserApplicationService.CreateUser(payload)
+	return e.JSON(result.Status(), result.Value())
+}
+
+func (c *UserController) UpdateUser(e echo.Context) error {
+	payload := new(dto.UpdateUserDTO)
+	payload.ID = e.Param("id")
+	if err := api.DecodeDTO(e, payload); err != nil {
+		jsonErr := http.BadRequestError(err)
+		return e.JSON(jsonErr.Status, jsonErr)
+	}
+
+	result := c.UserApplicationService.UpdateUser(payload)
 	return e.JSON(result.Status(), result.Value())
 }

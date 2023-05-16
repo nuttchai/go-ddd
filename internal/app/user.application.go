@@ -49,5 +49,28 @@ func (a *UserApplicationService) CreateUser(payload *dto.CreateUserDTO) *http.AP
 		Action:    "create_user",
 		IsSuccess: true,
 	}, "User Created Successfully")
+
+	return &http.APIResponse{APISuccess: jsonOk}
+}
+
+func (a *UserApplicationService) UpdateUser(payload *dto.UpdateUserDTO) *http.APIResponse {
+	userDTO := &dto.UserDTO{
+		ID:        payload.ID,
+		FirstName: payload.FirstName,
+		LastName:  payload.LastName,
+		Email:     payload.Email,
+		Address:   payload.Address,
+	}
+	user := a.UserReqDataMapper.ToDomainEntity(userDTO)
+	if err := a.userService.UpdateUser(user); err != nil {
+		jsonErr := http.BadRequestError(err)
+		return &http.APIResponse{APIError: jsonErr}
+	}
+
+	jsonOk := http.SuccessResponse(&dto.AcknowledgeDTO{
+		Action:    "update_user",
+		IsSuccess: true,
+	}, "User Updated Successfully")
+
 	return &http.APIResponse{APISuccess: jsonOk}
 }

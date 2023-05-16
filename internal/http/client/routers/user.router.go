@@ -15,4 +15,5 @@ func init() {
 func InitUserRouter(e *echo.Echo, handler controller.IUserController) {
 	e.GET(builder.BuildPath("/:id"), handler.FindUserById)
 	e.POST(builder.BuildPath(), handler.CreateUser)
+	e.PUT(builder.BuildPath("/:id"), handler.UpdateUser)
 }

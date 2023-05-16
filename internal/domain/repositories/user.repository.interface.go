@@ -9,6 +9,6 @@ type IUserRepository interface {
 	Save(entity *entity.User) error
 	Delete(entity *entity.User) error
 	IsExisted(entity *entity.User) bool
-	UpdateFirstNameIfIdExist(id, firstName string) error
+	UpdateUser(entity *entity.User) error
 	FindOneByEmail(email string) (*entity.User, error)
 }

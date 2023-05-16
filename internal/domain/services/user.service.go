@@ -39,11 +39,7 @@ func (s *UserService) UpdateUser(user *entity.User) error {
 	if isUserValid := user.IsUserValid(); !isUserValid {
 		return errors.New(constant.InvalidUpdatedUser)
 	}
-	return s.userRepo.Save(user)
-}
-
-func (s *UserService) UpdateFirstNameIfIdExist(id, firstName string) error {
-	return s.userRepo.UpdateFirstNameIfIdExist(id, firstName)
+	return s.userRepo.UpdateUser(user)
 }
 
 func (s *UserService) FindOneByEmail(email string) (*entity.User, error) {
