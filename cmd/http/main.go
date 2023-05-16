@@ -7,7 +7,7 @@ import (
 
 func main() {
 	logger := logger.NewLogger()
-	logger.Log("Starting server...")
+	logger.Info("Starting server...")
 
 	app.InitServer()
 }

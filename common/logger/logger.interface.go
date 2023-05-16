@@ -1,8 +1,7 @@
 package logger
 
 type ILogger interface {
-	Log(messages ...any)
-	Logf(message string, options ...any)
-	Fatal(messages ...any)
-	Fatalf(message string, options ...any)
+	Info(message string, options ...any)
+	Warn(message string, options ...any)
+	Error(message string, options ...any)
 }

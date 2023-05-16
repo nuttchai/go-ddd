@@ -17,23 +17,23 @@ func init() {
 
 func InitServer() {
 	// Add the Configuration into ApiConfig
-	app.Logger.Log("Loading Configuration...")
+	app.Logger.Info("Loading Configuration...")
 	if err := initEnv(); err != nil {
-		app.Logger.Fatalf("Error Loading App Configuration (Error: %s)", err.Error())
+		app.Logger.Error("Error Loading App Configuration (Error: %s)", err.Error())
 	}
 
 	// Establish Database Connection
-	app.Logger.Log("Connecting to Database...")
+	app.Logger.Info("Connecting to Database...")
 	if err := initDB(); err != nil {
-		app.Logger.Fatalf("Error Connecting to Database (Error: %s)", err.Error())
+		app.Logger.Error("Error Connecting to Database (Error: %s)", err.Error())
 	}
 
 	// Initialize the Application
-	app.Logger.Log("Initializing the Application...")
+	app.Logger.Info("Initializing the Application...")
 	e := echo.New()
 	middleware.EnableCORS(e)
 	if err := initApp(e); err != nil {
-		app.Logger.Fatalf("Error Initializing the Application (Error: %s)", err.Error())
+		app.Logger.Error("Error Initializing the Application (Error: %s)", err.Error())
 	}
 
 	// Defer Closing the Database Connection
@@ -42,9 +42,9 @@ func InitServer() {
 	defer sqlDB.Close()
 
 	// Start Server
-	app.Logger.Logf("Starting Server...")
+	app.Logger.Info("Starting Server...")
 	serverPort := fmt.Sprintf(":%s", AppConfig.GetRESTPort())
 	if err := e.Start(serverPort); err != nil {
-		app.Logger.Fatalf("Server Start Failed (Error: %s)", err.Error())
+		app.Logger.Error("Server Start Failed (Error: %s)", err.Error())
 	}
 }
