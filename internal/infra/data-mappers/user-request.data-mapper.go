@@ -38,3 +38,7 @@ func (m *UserRequestDataMapper) ToDalEntity(domainEntity *entity.User) *dto.User
 		},
 	}
 }
+
+func NewUserRequestDataMapper() *UserRequestDataMapper {
+	return &UserRequestDataMapper{}
+}

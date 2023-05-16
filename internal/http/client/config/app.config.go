@@ -16,11 +16,15 @@ func initApp(e *echo.Echo) error {
 		return err
 	}
 
-	userRepo := repository.NewUserRepository(db, &mapper.UserDataMapper{})
+	userMapper := mapper.NewUserDataMapper()
+	userRequestMapper := mapper.NewUserRequestDataMapper()
+
+	userRepo := repository.NewUserRepository(db, userMapper)
 	userSvc := service.NewUserService(userRepo)
-	userApp := application.NewUserApplicationService(userSvc, &mapper.UserRequestDataMapper{})
+	userApp := application.NewUserApplicationService(userSvc, userRequestMapper)
 	userHttp := controller.NewUserController(userApp)
 
 	router.InitUserRouter(e, userHttp)
+
 	return nil
 }

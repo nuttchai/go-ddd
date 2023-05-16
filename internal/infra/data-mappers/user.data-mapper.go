@@ -39,3 +39,7 @@ func (m *UserDataMapper) ToDalEntity(domainEntity *entity.User) *model.User {
 		},
 	}
 }
+
+func NewUserDataMapper() *UserDataMapper {
+	return &UserDataMapper{}
+}
