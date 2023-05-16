@@ -36,8 +36,10 @@ func (r *Repository[TDomainEntity, TDalEntity]) Save(entity *TDomainEntity) erro
 	return dbResult.Error
 }
 
-func (r *Repository[TDomainEntity, TDalEntity]) Delete(id string) error {
-	return nil
+func (r *Repository[TDomainEntity, TDalEntity]) Delete(entity *TDomainEntity) error {
+	dalEntity := r.dataMapper.ToDalEntity(entity)
+	dbResult := r.queryAdapter.Delete(&dalEntity)
+	return dbResult.Error
 }
 
 func (r *Repository[TDomainEntity, TDalEntity]) IsExisted(entity *TDomainEntity) bool {
