@@ -21,7 +21,7 @@ func NewUserApplicationService(userService service.IUserService, UserReqDataMapp
 }
 
 func (a *UserApplicationService) FindUserById(payload *dto.FindUserByIdDTO) *http.APIResponse {
-	user, err := a.userService.FindOneById(payload.Id)
+	user, err := a.userService.FindOneById(payload.ID)
 	if err != nil {
 		jsonErr := http.BadRequestError(err)
 		return &http.APIResponse{APIError: jsonErr}

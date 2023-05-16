@@ -21,12 +21,12 @@ func (m *UserRequestDataMapper) ToDomainEntity(dalEntity *dto.UserDTO) *entity.U
 			ZipCode: dalEntity.Address.ZipCode,
 		},
 	}
-	return entity.NewUser(props, dalEntity.Id)
+	return entity.NewUser(props, dalEntity.ID)
 }
 
 func (m *UserRequestDataMapper) ToDalEntity(domainEntity *entity.User) *dto.UserDTO {
 	return &dto.UserDTO{
-		Id:        domainEntity.Id,
+		ID:        domainEntity.ID,
 		FirstName: domainEntity.FirstName,
 		LastName:  domainEntity.LastName,
 		Email:     domainEntity.Email,

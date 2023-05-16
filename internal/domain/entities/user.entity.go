@@ -8,7 +8,7 @@ import (
 )
 
 type User struct {
-	Id        string               `json:"id"`
+	ID        string               `json:"id"`
 	FirstName string               `json:"first_name"`
 	LastName  string               `json:"last_name"`
 	Email     string               `json:"email"`
@@ -32,7 +32,7 @@ func NewUser(props *props.UserProps, id ...string) *User {
 
 	address := value_object.NewAddress(&props.Address)
 	return &User{
-		Id:        userId,
+		ID:        userId,
 		FirstName: props.FirstName,
 		LastName:  props.LastName,
 		Email:     props.Email,
