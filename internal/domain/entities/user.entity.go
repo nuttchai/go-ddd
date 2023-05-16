@@ -2,7 +2,7 @@ package entity
 
 import (
 	"github.com/google/uuid"
-	props "github.com/nuttchai/go-ddd/internal/domain/props"
+	props "github.com/nuttchai/go-ddd/internal/domain/entities/props"
 	value_object "github.com/nuttchai/go-ddd/internal/domain/value-objects"
 	validator "github.com/nuttchai/go-ddd/utils/validators"
 )

@@ -1,7 +1,7 @@
 package value_object
 
 import (
-	props "github.com/nuttchai/go-ddd/internal/domain/props"
+	props "github.com/nuttchai/go-ddd/internal/domain/value-objects/props"
 )
 
 type Address struct {

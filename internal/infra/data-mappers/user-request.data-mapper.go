@@ -2,18 +2,19 @@ package data_mapper
 
 import (
 	entity "github.com/nuttchai/go-ddd/internal/domain/entities"
-	"github.com/nuttchai/go-ddd/internal/domain/props"
+	eprops "github.com/nuttchai/go-ddd/internal/domain/entities/props"
+	vprops "github.com/nuttchai/go-ddd/internal/domain/value-objects/props"
 	dto "github.com/nuttchai/go-ddd/internal/shared/dtos"
 )
 
 type UserRequestDataMapper struct{}
 
 func (m *UserRequestDataMapper) ToDomainEntity(dalEntity *dto.UserDTO) *entity.User {
-	props := &props.UserProps{
+	props := &eprops.UserProps{
 		FirstName: dalEntity.FirstName,
 		LastName:  dalEntity.LastName,
 		Email:     dalEntity.Email,
-		Address: props.AddressProps{
+		Address: vprops.AddressProps{
 			Street:  dalEntity.Address.Street,
 			City:    dalEntity.Address.City,
 			State:   dalEntity.Address.State,
