@@ -7,7 +7,7 @@ import (
 )
 
 type FindUserByIdDTO struct {
-	ID string `query:"id" validate:"required"`
+	ID string `param:"id" validate:"required"`
 }
 
 func (dto *FindUserByIdDTO) IsDTOValid() (bool, error) {
