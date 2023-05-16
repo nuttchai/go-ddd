@@ -1,6 +1,9 @@
 package repository
 
 import (
+	"reflect"
+	"strings"
+
 	mapper "github.com/nuttchai/go-ddd/common/infra/data-mappers"
 	"gorm.io/gorm"
 )
@@ -17,9 +20,22 @@ func NewRepository[TDomainEntity any, TDalEntity any](queryAdapter *gorm.DB, dat
 	}
 }
 
+func (r *Repository[TDomainEntity, TDalEntity]) PreloadAll() *gorm.DB {
+	db := r.queryAdapter
+	model := new(TDalEntity)
+	modelType := reflect.TypeOf(*model)
+	for i := 0; i < modelType.NumField(); i++ {
+		field := modelType.Field(i)
+		if tag, ok := field.Tag.Lookup("gorm"); ok && strings.Contains(tag, "foreignkey") {
+			db = db.Preload(strings.Title(field.Name))
+		}
+	}
+	return db
+}
+
 func (r *Repository[TDomainEntity, TDalEntity]) FindOneById(id string) (*TDomainEntity, error) {
 	item := new(TDalEntity)
-	if dbResult := r.queryAdapter.Where("id = ?", id).First(item); dbResult.Error != nil {
+	if dbResult := r.PreloadAll().Where("id = ?", id).First(item); dbResult.Error != nil {
 		return nil, dbResult.Error
 	}
 	return r.dataMapper.ToDomainEntity(item), nil
