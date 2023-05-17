@@ -1,4 +1,4 @@
-package api
+package http
 
 type APIResponse struct {
 	APISuccess *APISuccess

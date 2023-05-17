@@ -1,9 +1,7 @@
-package api
+package http
 
 import (
 	"net/http"
-
-	constant "github.com/nuttchai/go-ddd/common/constants"
 )
 
 type APISuccess struct {
@@ -13,7 +11,7 @@ type APISuccess struct {
 }
 
 func SuccessResponse(result any, message ...string) *APISuccess {
-	msg := constant.DefaultAPISuccessMsg
+	msg := defaultAPISuccessMsg
 	if len(message) > 0 {
 		msg = message[0]
 	}

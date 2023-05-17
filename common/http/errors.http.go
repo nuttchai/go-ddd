@@ -1,9 +1,7 @@
-package api
+package http
 
 import (
 	"net/http"
-
-	constant "github.com/nuttchai/go-ddd/common/constants"
 )
 
 type APIError struct {
@@ -13,7 +11,7 @@ type APIError struct {
 }
 
 func CustomError(err error, status int, message ...string) *APIError {
-	msg := constant.DefaultAPIErrorMsg
+	msg := defaultAPIErrorMsg
 	if len(message) > 0 {
 		msg = message[0]
 	}
