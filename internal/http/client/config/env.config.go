@@ -10,7 +10,7 @@ import (
 
 func initEnv() error {
 	// Load Environment Variables
-	appEnv := env.GetEnv("APP_ENV", "development")
+	appEnv := env.GetEnv("APP_ENV", env.Local.Name)
 	envDefaultDir, err := env.GetDefaultEnvFileDirectoryPath(appEnv)
 	if err != nil {
 		return err

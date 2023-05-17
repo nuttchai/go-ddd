@@ -19,11 +19,11 @@ func GetDefaultEnvFileDirectoryPath(appEnv string) (string, error) {
 		return "", err
 	}
 
-	if appEnv == "production" {
-		envDir := rootDir + "/.env.production"
-		return envDir, nil
+	envFileName := Local.File
+	if appEnv == Production.Name {
+		envFileName = Production.File
 	}
 
-	envDir := rootDir + "/.env"
-	return envDir, nil
+	envFilePath := rootDir + "/" + envFileName
+	return envFilePath, nil
 }

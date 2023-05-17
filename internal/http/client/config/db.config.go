@@ -5,6 +5,7 @@ import (
 
 	types "github.com/nuttchai/go-ddd/internal/shared/types"
 	context "github.com/nuttchai/go-ddd/utils/context"
+	env "github.com/nuttchai/go-ddd/utils/env"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -16,9 +17,9 @@ const (
 )
 
 func initDB() error {
-	env := types.AppConfig.GetENV()
+	appEnv := types.AppConfig.GetENV()
 	dbConfig := &gorm.Config{}
-	if env == "production" {
+	if appEnv == env.Production.Name {
 		dbConfig.Logger = logger.Default.LogMode(logger.Silent)
 	}
 
