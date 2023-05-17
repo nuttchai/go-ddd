@@ -45,7 +45,7 @@ func (r *Repository[TDomainEntity, TDalEntity]) Save(entity *TDomainEntity) erro
 	isExisted := r.IsExisted(entity)
 	dalEntity := r.dataMapper.ToDalEntity(entity)
 	if isExisted {
-		dbResult := r.queryAdapter.Session(&gorm.Session{FullSaveAssociations: true}).Save(&dalEntity)
+		dbResult := r.queryAdapter.Session(&gorm.Session{FullSaveAssociations: true}).Updates(&dalEntity)
 		return dbResult.Error
 	}
 	dbResult := r.queryAdapter.Save(&dalEntity)
