@@ -9,12 +9,6 @@ import (
 	types "github.com/nuttchai/go-ddd/internal/shared/types"
 )
 
-var AppConfig *types.AppConfig
-
-func init() {
-	AppConfig = &types.AppConfig{}
-}
-
 func InitServer() {
 	// Add the Configuration into AppConfig
 	app.Logger.Info("Loading Configuration...")
@@ -43,7 +37,7 @@ func InitServer() {
 
 	// Start Server
 	app.Logger.Info("Starting Server...")
-	serverPort := fmt.Sprintf(":%s", AppConfig.GetRESTPort())
+	serverPort := fmt.Sprintf(":%s", types.AppConfig.GetRESTPort())
 	if err := e.Start(serverPort); err != nil {
 		app.Logger.Error("Server Start Failed (Error: %s)", err.Error())
 	}

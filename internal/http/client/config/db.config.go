@@ -3,6 +3,7 @@ package config
 import (
 	"errors"
 
+	types "github.com/nuttchai/go-ddd/internal/shared/types"
 	context "github.com/nuttchai/go-ddd/utils/context"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -15,13 +16,13 @@ const (
 )
 
 func initDB() error {
-	env := AppConfig.GetENV()
+	env := types.AppConfig.GetENV()
 	dbConfig := &gorm.Config{}
 	if env == "production" {
 		dbConfig.Logger = logger.Default.LogMode(logger.Silent)
 	}
 
-	dsn := AppConfig.GetDBConfig().GetDSN()
+	dsn := types.AppConfig.GetDBConfig().GetDSN()
 	db, err := gorm.Open(postgres.Open(dsn), dbConfig)
 	if err != nil {
 		return err
@@ -38,12 +39,12 @@ func initDB() error {
 		return err
 	}
 
-	AppConfig.SetDBInstance(db)
+	types.AppConfig.SetDBInstance(db)
 	return nil
 }
 
 func getDB() (*gorm.DB, error) {
-	dbInterface := AppConfig.GetDBConfig().GetDBInstance()
+	dbInterface := types.AppConfig.GetDBConfig().GetDBInstance()
 	db, ok := dbInterface.(*gorm.DB)
 	if !ok {
 		return nil, errors.New(dBTypeAssertionErrorMsg)

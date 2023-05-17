@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 
+	types "github.com/nuttchai/go-ddd/internal/shared/types"
 	env "github.com/nuttchai/go-ddd/utils/env"
 )
 
@@ -45,9 +46,9 @@ func initEnv() error {
 	flag.Parse()
 
 	// Set Value to AppConfig
-	AppConfig.SetENV(env)
-	AppConfig.SetRESTConfig(serverPort)
-	AppConfig.SetDBMetaData(dsn, driver)
+	types.AppConfig.SetENV(env)
+	types.AppConfig.SetRESTConfig(serverPort)
+	types.AppConfig.SetDBMetaData(dsn, driver)
 
 	return nil
 }
