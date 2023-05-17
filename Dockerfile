@@ -12,7 +12,7 @@ RUN go mod download
 COPY . .
 
 # Build app
-RUN go build -a -installsuffix cgo -o ./main ./cmd/api
+RUN go build -a -installsuffix cgo -o ./main ./cmd/http
 
 # Multi-stages build
 FROM alpine:latest
