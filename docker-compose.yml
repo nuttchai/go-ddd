@@ -33,6 +33,7 @@ services:
     ports:
       - 8000:8000
     environment:
+      APP_ENV: production
       APP_DB_NAME: userdb
       APP_DB_USER: postgres
       APP_DB_PASS: postgres
