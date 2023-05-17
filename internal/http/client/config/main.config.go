@@ -16,7 +16,7 @@ func init() {
 }
 
 func InitServer() {
-	// Add the Configuration into ApiConfig
+	// Add the Configuration into AppConfig
 	app.Logger.Info("Loading Configuration...")
 	if err := initEnv(); err != nil {
 		app.Logger.Error("Error Loading App Configuration (Error: %s)", err.Error())
