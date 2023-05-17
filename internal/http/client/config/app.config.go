@@ -11,6 +11,15 @@ import (
 )
 
 func initApp(e *echo.Echo) error {
+	router := route.NewRouter()
+	if err := initUserApp(e, router); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func initUserApp(e *echo.Echo, r *route.Router) error {
 	db, err := getDB()
 	if err != nil {
 		return err
@@ -19,13 +28,12 @@ func initApp(e *echo.Echo) error {
 	userMapper := mapper.NewUserDataMapper()
 	userRequestMapper := mapper.NewUserRequestDataMapper()
 
-	userRepo := repository.NewUserRepository(db, userMapper)
-	userSvc := service.NewUserService(userRepo)
-	userApp := application.NewUserApplicationService(userSvc, userRequestMapper)
-	userHttp := controller.NewUserController(userApp)
+	repo := repository.NewUserRepository(db, userMapper)
+	service := service.NewUserService(repo)
+	app := application.NewUserApplicationService(service, userRequestMapper)
+	http := controller.NewUserController(app)
 
-	router := route.NewRouter()
-	router.InitUserRouter(e, userHttp)
+	r.InitUserRouter(e, http)
 
 	return nil
 }
