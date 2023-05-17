@@ -24,30 +24,30 @@ services:
     networks:
       - user_svc
 
-  # api:
-  #   container_name: api
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   restart: always
-  #   ports:
-  #     - 8000:8000
-  #   environment:
-  #     APP_DB_NAME: user
-  #     APP_DB_USER: postgres
-  #     APP_DB_PASS: postgres
-  #     DB_TYPE: postgres
-  #     DB_DRIVER: postgres
-  #     DB_HOST: db
-  #     DB_PORT: 5432
-  #     APP_PORT: 8000
-  #   depends_on:
-  #     db:
-  #       condition: service_healthy
-  #   links:
-  #     - db
-  #   networks:
-  #     - user_svc
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8000:8000
+    environment:
+      APP_DB_NAME: user
+      APP_DB_USER: postgres
+      APP_DB_PASS: postgres
+      DB_TYPE: postgres
+      DB_DRIVER: postgres
+      DB_HOST: db
+      DB_PORT: 5432
+      APP_PORT: 8000
+    depends_on:
+      db:
+        condition: service_healthy
+    links:
+      - db
+    networks:
+      - user_svc
 
 networks:
   user_svc:
