@@ -3,11 +3,15 @@ package config
 import (
 	"errors"
 
-	constant "github.com/nuttchai/go-ddd/internal/http/client/constants"
 	context "github.com/nuttchai/go-ddd/utils/context"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+)
+
+const (
+	initConnectionTimeout   = 5
+	dBTypeAssertionErrorMsg = "invalid_db_type_assertion"
 )
 
 func initDB() error {
@@ -28,7 +32,7 @@ func initDB() error {
 		return err
 	}
 
-	ctx, cancel := context.WithTimeout(constant.InitConnectionTimeout)
+	ctx, cancel := context.WithTimeout(initConnectionTimeout)
 	defer cancel()
 	if err = sqlDB.PingContext(ctx); err != nil {
 		return err
@@ -42,7 +46,7 @@ func getDB() (*gorm.DB, error) {
 	dbInterface := AppConfig.GetDBConfig().GetDBInstance()
 	db, ok := dbInterface.(*gorm.DB)
 	if !ok {
-		return nil, errors.New(constant.InvalidDBTypeAssertion)
+		return nil, errors.New(dBTypeAssertionErrorMsg)
 	}
 
 	return db, nil
