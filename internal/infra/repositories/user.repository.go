@@ -28,20 +28,11 @@ func (r *UserRepository) UpdateUser(entity *entity.User) error {
 	if dbResult := r.PreloadAll().Where("id = ?", entity.ID).First(item); dbResult.Error != nil {
 		return dbResult.Error
 	}
-	if item.AddressID == "" {
-		return r.Save(entity)
-	}
 
 	dalEntity := r.dataMapper.ToDalEntity(entity)
-	dalEntity.AddressID = item.AddressID
-	dalAddress := dalEntity.Address
-	dalEntity.Address = model.Address{}
-	if updateUserResult := r.queryAdapter.Model(&dalEntity).Updates(&dalEntity); updateUserResult.Error != nil {
-		return updateUserResult.Error
-	}
-
-	updateAddressResult := r.queryAdapter.Model(&dalAddress).Where("id = ?", item.AddressID).Updates(&dalAddress)
-	return updateAddressResult.Error
+	dalEntity.Address.ID = item.AddressID
+	dbResult := r.queryAdapter.Session(&gorm.Session{FullSaveAssociations: true}).Updates(&dalEntity)
+	return dbResult.Error
 }
 
 func (r *UserRepository) FindOneByEmail(email string) (*entity.User, error) {
