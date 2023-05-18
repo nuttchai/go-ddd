@@ -11,6 +11,18 @@ type Logger struct {
 	WarnLogger  *log.Logger
 }
 
+func (s *Logger) Info(message string, options ...any) {
+	s.InfoLogger.Printf(message, options...)
+}
+
+func (s *Logger) Error(message string, options ...any) {
+	s.ErrorLogger.Fatalf(message, options...)
+}
+
+func (s *Logger) Warn(message string, options ...any) {
+	s.WarnLogger.Printf(message, options...)
+}
+
 func NewLogger(domain ...string) ILogger {
 	domainPrefix := "APP"
 	if len(domain) > 0 {
@@ -26,16 +38,4 @@ func NewLogger(domain ...string) ILogger {
 		ErrorLogger: log.New(os.Stdout, errorPrefix, log.Ldate|log.Ltime),
 		WarnLogger:  log.New(os.Stdout, warnPrefix, log.Ldate|log.Ltime),
 	}
-}
-
-func (s *Logger) Info(message string, options ...any) {
-	s.InfoLogger.Printf(message, options...)
-}
-
-func (s *Logger) Error(message string, options ...any) {
-	s.ErrorLogger.Fatalf(message, options...)
-}
-
-func (s *Logger) Warn(message string, options ...any) {
-	s.WarnLogger.Printf(message, options...)
 }
