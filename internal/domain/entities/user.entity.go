@@ -3,16 +3,16 @@ package entity
 import (
 	"github.com/google/uuid"
 	props "github.com/nuttchai/go-ddd/internal/domain/entities/props"
-	value_object "github.com/nuttchai/go-ddd/internal/domain/value-objects"
+	valobj "github.com/nuttchai/go-ddd/internal/domain/value-objects"
 	validator "github.com/nuttchai/go-ddd/utils/validators"
 )
 
 type User struct {
-	ID        string               `json:"id"`
-	FirstName string               `json:"first_name"`
-	LastName  string               `json:"last_name"`
-	Email     string               `json:"email"`
-	Address   value_object.Address `json:"address"`
+	ID        string         `json:"id"`
+	FirstName string         `json:"first_name"`
+	LastName  string         `json:"last_name"`
+	Email     string         `json:"email"`
+	Address   valobj.Address `json:"address"`
 }
 
 func (u *User) IsUserValid() bool {
@@ -30,7 +30,7 @@ func NewUser(props *props.UserProps, id ...string) *User {
 		userId = id[0]
 	}
 
-	address := value_object.NewAddress(&props.Address)
+	address := valobj.NewAddress(&props.Address)
 	return &User{
 		ID:        userId,
 		FirstName: props.FirstName,
