@@ -25,7 +25,7 @@ func NewUserRepository(queryAdapter *gorm.DB, dataMapper mapper.IDataMapper[enti
 
 func (r *UserRepository) UpdateUser(entity *entity.User) error {
 	item := new(model.User)
-	if dbResult := r.PreloadAll().Where("id = ?", entity.ID).First(item); dbResult.Error != nil {
+	if dbResult := r.queryAdapter.Preload("Address").Where("id = ?", entity.ID).First(item); dbResult.Error != nil {
 		return dbResult.Error
 	}
 
