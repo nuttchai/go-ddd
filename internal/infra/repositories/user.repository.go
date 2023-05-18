@@ -1,23 +1,23 @@
 package repository
 
 import (
-	cmapper "github.com/nuttchai/go-ddd/common/infra/data-mappers"
-	crepo "github.com/nuttchai/go-ddd/common/infra/repositories"
+	mapper "github.com/nuttchai/go-ddd/common/infra/data-mappers"
+	repository "github.com/nuttchai/go-ddd/common/infra/repositories"
 	entity "github.com/nuttchai/go-ddd/internal/domain/entities"
-	irepo "github.com/nuttchai/go-ddd/internal/domain/repositories"
+	irepository "github.com/nuttchai/go-ddd/internal/domain/repositories"
 	model "github.com/nuttchai/go-ddd/internal/infra/models"
 	"gorm.io/gorm"
 )
 
 type UserRepository struct {
-	*crepo.Repository[entity.User, model.User]
+	*repository.Repository[entity.User, model.User]
 	queryAdapter *gorm.DB
-	dataMapper   cmapper.IDataMapper[entity.User, model.User]
+	dataMapper   mapper.IDataMapper[entity.User, model.User]
 }
 
-func NewUserRepository(queryAdapter *gorm.DB, dataMapper cmapper.IDataMapper[entity.User, model.User]) irepo.IUserRepository {
+func NewUserRepository(queryAdapter *gorm.DB, dataMapper mapper.IDataMapper[entity.User, model.User]) irepository.IUserRepository {
 	return &UserRepository{
-		Repository:   crepo.NewRepository(queryAdapter, dataMapper),
+		Repository:   repository.NewRepository(queryAdapter, dataMapper),
 		queryAdapter: queryAdapter,
 		dataMapper:   dataMapper,
 	}
