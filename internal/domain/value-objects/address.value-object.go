@@ -1,7 +1,7 @@
 package value_object
 
 import (
-	props "github.com/nuttchai/go-ddd/internal/domain/value-objects/props"
+	vprops "github.com/nuttchai/go-ddd/internal/domain/value-objects/props"
 )
 
 type Address struct {
@@ -11,7 +11,7 @@ type Address struct {
 	ZipCode string `json:"zip_code"`
 }
 
-func NewAddress(props *props.AddressProps) *Address {
+func NewAddress(props *vprops.AddressProps) *Address {
 	return &Address{
 		Street:  props.Street,
 		City:    props.City,

@@ -2,7 +2,7 @@ package entity
 
 import (
 	"github.com/google/uuid"
-	props "github.com/nuttchai/go-ddd/internal/domain/entities/props"
+	eprops "github.com/nuttchai/go-ddd/internal/domain/entities/props"
 	valobj "github.com/nuttchai/go-ddd/internal/domain/value-objects"
 	validator "github.com/nuttchai/go-ddd/utils/validators"
 )
@@ -24,7 +24,7 @@ func (u *User) IsUserValid() bool {
 	return true
 }
 
-func NewUser(props *props.UserProps, id ...string) *User {
+func NewUser(props *eprops.UserProps, id ...string) *User {
 	userId := uuid.New().String()
 	if len(id) > 0 && id[0] != "" {
 		userId = id[0]
