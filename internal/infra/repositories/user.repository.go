@@ -10,14 +10,14 @@ import (
 )
 
 type UserRepository struct {
-	*repository.Repository[entity.User, model.User]
+	repository.IRepository[entity.User, model.User]
 	queryAdapter *gorm.DB
 	dataMapper   mapper.IDataMapper[entity.User, model.User]
 }
 
 func NewUserRepository(queryAdapter *gorm.DB, dataMapper mapper.IDataMapper[entity.User, model.User]) irepository.IUserRepository {
 	return &UserRepository{
-		Repository:   repository.NewRepository(queryAdapter, dataMapper),
+		IRepository:  repository.NewRepository(queryAdapter, dataMapper),
 		queryAdapter: queryAdapter,
 		dataMapper:   dataMapper,
 	}

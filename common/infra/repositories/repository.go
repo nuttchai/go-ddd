@@ -13,7 +13,7 @@ type Repository[TDomainEntity any, TDalEntity any] struct {
 	dataMapper   mapper.IDataMapper[TDomainEntity, TDalEntity]
 }
 
-func NewRepository[TDomainEntity any, TDalEntity any](queryAdapter *gorm.DB, dataMapper mapper.IDataMapper[TDomainEntity, TDalEntity]) *Repository[TDomainEntity, TDalEntity] {
+func NewRepository[TDomainEntity any, TDalEntity any](queryAdapter *gorm.DB, dataMapper mapper.IDataMapper[TDomainEntity, TDalEntity]) IRepository[TDomainEntity, TDalEntity] {
 	return &Repository[TDomainEntity, TDalEntity]{
 		queryAdapter: queryAdapter,
 		dataMapper:   dataMapper,
