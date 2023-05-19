@@ -20,7 +20,7 @@ func NewRepository[TDomainEntity any, TDalEntity any](queryAdapter *gorm.DB, dat
 	}
 }
 
-func (r *Repository[TDomainEntity, TDalEntity]) _preloadAll() *gorm.DB {
+func (r *Repository[TDomainEntity, TDalEntity]) _preloadEntity() *gorm.DB {
 	db := r.queryAdapter
 	model := new(TDalEntity)
 	modelType := reflect.TypeOf(*model)
@@ -35,7 +35,7 @@ func (r *Repository[TDomainEntity, TDalEntity]) _preloadAll() *gorm.DB {
 
 func (r *Repository[TDomainEntity, TDalEntity]) FindOneById(id string) (*TDomainEntity, error) {
 	item := new(TDalEntity)
-	if dbResult := r._preloadAll().Where("id = ?", id).First(item); dbResult.Error != nil {
+	if dbResult := r._preloadEntity().Where("id = ?", id).First(item); dbResult.Error != nil {
 		return nil, dbResult.Error
 	}
 	return r.dataMapper.ToDomainEntity(item), nil
