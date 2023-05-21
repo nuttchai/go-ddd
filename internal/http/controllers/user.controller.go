@@ -8,12 +8,12 @@ import (
 )
 
 type UserController struct {
-	UserApplicationService application.IUserApplicationService
+	userApplicationService application.IUserApplicationService
 }
 
-func NewUserController(UserApplicationService application.IUserApplicationService) IUserController {
+func NewUserController(userApplicationService application.IUserApplicationService) IUserController {
 	return &UserController{
-		UserApplicationService: UserApplicationService,
+		userApplicationService: userApplicationService,
 	}
 }
 
@@ -25,7 +25,7 @@ func (c *UserController) FindUserById(e echo.Context) error {
 		return e.JSON(jsonErr.Status, jsonErr)
 	}
 
-	result := c.UserApplicationService.FindUserById(payload)
+	result := c.userApplicationService.FindUserById(payload)
 	return e.JSON(result.Status(), result.Value())
 }
 
@@ -36,7 +36,7 @@ func (c *UserController) CreateUser(e echo.Context) error {
 		return e.JSON(jsonErr.Status, jsonErr)
 	}
 
-	result := c.UserApplicationService.CreateUser(payload)
+	result := c.userApplicationService.CreateUser(payload)
 	return e.JSON(result.Status(), result.Value())
 }
 
@@ -48,6 +48,6 @@ func (c *UserController) UpdateUser(e echo.Context) error {
 		return e.JSON(jsonErr.Status, jsonErr)
 	}
 
-	result := c.UserApplicationService.UpdateUser(payload)
+	result := c.userApplicationService.UpdateUser(payload)
 	return e.JSON(result.Status(), result.Value())
 }

@@ -10,13 +10,13 @@ import (
 
 type UserApplicationService struct {
 	userService       service.IUserService
-	UserReqDataMapper cmapper.IDataMapper[entity.User, dto.UserDTO]
+	userReqDataMapper cmapper.IDataMapper[entity.User, dto.UserDTO]
 }
 
-func NewUserApplicationService(userService service.IUserService, UserReqDataMapper cmapper.IDataMapper[entity.User, dto.UserDTO]) IUserApplicationService {
+func NewUserApplicationService(userService service.IUserService, userReqDataMapper cmapper.IDataMapper[entity.User, dto.UserDTO]) IUserApplicationService {
 	return &UserApplicationService{
 		userService:       userService,
-		UserReqDataMapper: UserReqDataMapper,
+		userReqDataMapper: userReqDataMapper,
 	}
 }
 
@@ -27,7 +27,7 @@ func (a *UserApplicationService) FindUserById(payload *dto.FindUserByIdDTO) *htt
 		return &http.APIResponse{APIError: jsonErr}
 	}
 
-	userDTO := a.UserReqDataMapper.ToDalEntity(user)
+	userDTO := a.userReqDataMapper.ToDalEntity(user)
 	jsonOk := http.SuccessResponse(userDTO, "User Found Successfully")
 	return &http.APIResponse{APISuccess: jsonOk}
 }
@@ -39,7 +39,7 @@ func (a *UserApplicationService) CreateUser(payload *dto.CreateUserDTO) *http.AP
 		Email:     payload.Email,
 		Address:   payload.Address,
 	}
-	user := a.UserReqDataMapper.ToDomainEntity(userDTO)
+	user := a.userReqDataMapper.ToDomainEntity(userDTO)
 	if err := a.userService.CreateUser(user); err != nil {
 		jsonErr := http.BadRequestError(err)
 		return &http.APIResponse{APIError: jsonErr}
@@ -61,7 +61,7 @@ func (a *UserApplicationService) UpdateUser(payload *dto.UpdateUserDTO) *http.AP
 		Email:     payload.Email,
 		Address:   payload.Address,
 	}
-	user := a.UserReqDataMapper.ToDomainEntity(userDTO)
+	user := a.userReqDataMapper.ToDomainEntity(userDTO)
 	if err := a.userService.UpdateUser(user); err != nil {
 		jsonErr := http.BadRequestError(err)
 		return &http.APIResponse{APIError: jsonErr}
