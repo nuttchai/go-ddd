@@ -1,4 +1,4 @@
-# go-ddd
+# [template] go-ddd
 
 Next Action:
 - Create a sample unit test
