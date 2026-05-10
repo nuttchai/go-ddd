@@ -1,4 +1,4 @@
-package dto
+package dtos
 
 type AcknowledgeDTO struct {
 	Action    string `json:"action"`

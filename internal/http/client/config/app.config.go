@@ -2,8 +2,7 @@ package config
 
 import (
 	"github.com/labstack/echo"
-	application "github.com/nuttchai/go-ddd/internal/app"
-	service "github.com/nuttchai/go-ddd/internal/domain/services"
+	usecase "github.com/nuttchai/go-ddd/internal/app/usecases"
 	route "github.com/nuttchai/go-ddd/internal/http/client/routers"
 	controller "github.com/nuttchai/go-ddd/internal/http/controllers"
 	mapper "github.com/nuttchai/go-ddd/internal/infra/data-mappers"
@@ -26,12 +25,10 @@ func initUserApp(e *echo.Echo, r *route.Router) error {
 	}
 
 	userMapper := mapper.NewUserDataMapper()
-	userRequestMapper := mapper.NewUserRequestDataMapper()
 
 	repo := repository.NewUserRepository(db, userMapper)
-	service := service.NewUserService(repo)
-	app := application.NewUserApplicationService(service, userRequestMapper)
-	http := controller.NewUserController(app)
+	userUsecase := usecase.NewUserUsecase(repo)
+	http := controller.NewUserController(userUsecase)
 
 	r.InitUserRouter(e, http)
 

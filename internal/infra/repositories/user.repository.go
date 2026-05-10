@@ -3,8 +3,8 @@ package repository
 import (
 	mapper "github.com/nuttchai/go-ddd/common/infra/data-mappers"
 	repository "github.com/nuttchai/go-ddd/common/infra/repositories"
+	irepository "github.com/nuttchai/go-ddd/internal/app/repositories"
 	entity "github.com/nuttchai/go-ddd/internal/domain/entities"
-	irepository "github.com/nuttchai/go-ddd/internal/domain/repositories"
 	model "github.com/nuttchai/go-ddd/internal/infra/models"
 	"gorm.io/gorm"
 )

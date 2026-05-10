@@ -9,15 +9,13 @@ import (
 	config "github.com/nuttchai/go-ddd/common/config"
 	cmapper "github.com/nuttchai/go-ddd/common/infra/data-mappers"
 	middleware "github.com/nuttchai/go-ddd/common/middlewares"
-	application "github.com/nuttchai/go-ddd/internal/app"
+	irepository "github.com/nuttchai/go-ddd/internal/app/repositories"
+	usecase "github.com/nuttchai/go-ddd/internal/app/usecases"
 	entity "github.com/nuttchai/go-ddd/internal/domain/entities"
-	irepository "github.com/nuttchai/go-ddd/internal/domain/repositories"
-	iservice "github.com/nuttchai/go-ddd/internal/domain/services"
 	route "github.com/nuttchai/go-ddd/internal/http/client/routers"
 	controller "github.com/nuttchai/go-ddd/internal/http/controllers"
 	model "github.com/nuttchai/go-ddd/internal/infra/models"
 	repository "github.com/nuttchai/go-ddd/internal/infra/repositories"
-	dto "github.com/nuttchai/go-ddd/internal/shared/dtos"
 	types "github.com/nuttchai/go-ddd/internal/shared/types"
 	context "github.com/nuttchai/go-ddd/utils/context"
 	env "github.com/nuttchai/go-ddd/utils/env"
@@ -30,8 +28,7 @@ const (
 	initConnectionTimeout = 5
 
 	invalidUserRepositoryTypeAssertion = "invalid_user_repository_type_assertion"
-	invalidUserServiceTypeAssertion    = "invalid_user_service_type_assertion"
-	invalidUserAppTypeAssertion        = "invalid_user_application_type_assertion"
+	invalidUserUsecaseTypeAssertion    = "invalid_user_usecase_type_assertion"
 	invalidUserControllerTypeAssertion = "invalid_user_controller_type_assertion"
 )
 
@@ -130,26 +127,17 @@ func ProvideUserRepository(queryAdapter *gorm.DB, dataMapper cmapper.IDataMapper
 	return repo, nil
 }
 
-func ProvideUserService(userRepo irepository.IUserRepository) (*iservice.UserService, error) {
-	userService := iservice.NewUserService(userRepo)
-	service, ok := userService.(*iservice.UserService)
+func ProvideUserUsecase(userRepo irepository.IUserRepository) (*usecase.UserUsecase, error) {
+	userUsecase := usecase.NewUserUsecase(userRepo)
+	uc, ok := userUsecase.(*usecase.UserUsecase)
 	if !ok {
-		return nil, errors.New(invalidUserServiceTypeAssertion)
+		return nil, errors.New(invalidUserUsecaseTypeAssertion)
 	}
-	return service, nil
+	return uc, nil
 }
 
-func ProvideUserApplicationService(userService iservice.IUserService, userReqDataMapper cmapper.IDataMapper[entity.User, dto.UserDTO]) (*application.UserApplicationService, error) {
-	userApplicationService := application.NewUserApplicationService(userService, userReqDataMapper)
-	appService, ok := userApplicationService.(*application.UserApplicationService)
-	if !ok {
-		return nil, errors.New(invalidUserAppTypeAssertion)
-	}
-	return appService, nil
-}
-
-func ProvideUserController(userAppService application.IUserApplicationService) (*controller.UserController, error) {
-	userController := controller.NewUserController(userAppService)
+func ProvideUserController(userUsecase usecase.IUserUsecase) (*controller.UserController, error) {
+	userController := controller.NewUserController(userUsecase)
 	httpController, ok := userController.(*controller.UserController)
 	if !ok {
 		return nil, errors.New(invalidUserControllerTypeAssertion)

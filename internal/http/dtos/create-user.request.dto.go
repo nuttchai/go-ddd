@@ -1,4 +1,4 @@
-package dto
+package dtos
 
 import validator "github.com/nuttchai/go-ddd/utils/validators"
 

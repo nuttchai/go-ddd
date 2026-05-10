@@ -3,17 +3,17 @@ package controller
 import (
 	"github.com/labstack/echo"
 	http "github.com/nuttchai/go-ddd/common/http"
-	application "github.com/nuttchai/go-ddd/internal/app"
-	dto "github.com/nuttchai/go-ddd/internal/shared/dtos"
+	usecase "github.com/nuttchai/go-ddd/internal/app/usecases"
+	dto "github.com/nuttchai/go-ddd/internal/http/dtos"
 )
 
 type UserController struct {
-	userApplicationService application.IUserApplicationService
+	userUsecase usecase.IUserUsecase
 }
 
-func NewUserController(userApplicationService application.IUserApplicationService) IUserController {
+func NewUserController(userUsecase usecase.IUserUsecase) IUserController {
 	return &UserController{
-		userApplicationService: userApplicationService,
+		userUsecase: userUsecase,
 	}
 }
 
@@ -25,7 +25,7 @@ func (c *UserController) FindUserById(e echo.Context) error {
 		return e.JSON(jsonErr.Status, jsonErr)
 	}
 
-	result := c.userApplicationService.FindUserById(payload)
+	result := c.userUsecase.FindUserById(payload)
 	return e.JSON(result.Status(), result.Value())
 }
 
@@ -36,7 +36,7 @@ func (c *UserController) CreateUser(e echo.Context) error {
 		return e.JSON(jsonErr.Status, jsonErr)
 	}
 
-	result := c.userApplicationService.CreateUser(payload)
+	result := c.userUsecase.CreateUser(payload)
 	return e.JSON(result.Status(), result.Value())
 }
 
@@ -48,6 +48,6 @@ func (c *UserController) UpdateUser(e echo.Context) error {
 		return e.JSON(jsonErr.Status, jsonErr)
 	}
 
-	result := c.userApplicationService.UpdateUser(payload)
+	result := c.userUsecase.UpdateUser(payload)
 	return e.JSON(result.Status(), result.Value())
 }

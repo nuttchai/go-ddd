@@ -31,18 +31,12 @@ func InitializeHTTPServer() (*di.HTTPServer, func(), error) {
 		cleanup()
 		return nil, nil, err
 	}
-	userService, err := di.ProvideUserService(userRepository)
+	userUsecase, err := di.ProvideUserUsecase(userRepository)
 	if err != nil {
 		cleanup()
 		return nil, nil, err
 	}
-	userRequestDataMapper := data_mapper.NewUserRequestDataMapper()
-	userApplicationService, err := di.ProvideUserApplicationService(userService, userRequestDataMapper)
-	if err != nil {
-		cleanup()
-		return nil, nil, err
-	}
-	userController, err := di.ProvideUserController(userApplicationService)
+	userController, err := di.ProvideUserController(userUsecase)
 	if err != nil {
 		cleanup()
 		return nil, nil, err
