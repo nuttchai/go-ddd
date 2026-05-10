@@ -1,77 +1,87 @@
 package usecase
 
 import (
-	"errors"
-
-	http "github.com/nuttchai/go-ddd/common/http"
-	irepository "github.com/nuttchai/go-ddd/internal/app/repositories"
-	httpdtos "github.com/nuttchai/go-ddd/internal/http/dtos"
-	constant "github.com/nuttchai/go-ddd/internal/shared/constants"
+	irepo "github.com/nuttchai/go-ddd/internal/app/repositories"
+	entity "github.com/nuttchai/go-ddd/internal/domain/entities"
+	eprops "github.com/nuttchai/go-ddd/internal/domain/entities/props"
+	vprops "github.com/nuttchai/go-ddd/internal/domain/value-objects/props"
+	dto "github.com/nuttchai/go-ddd/internal/http/dtos"
+	sharederror "github.com/nuttchai/go-ddd/internal/shared/errors"
 )
 
 type UserUsecase struct {
-	userRepo irepository.IUserRepository
+	userRepo irepo.IUserRepository
 }
 
-func NewUserUsecase(userRepo irepository.IUserRepository) IUserUsecase {
+func NewUserUsecase(userRepo irepo.IUserRepository) IUserUsecase {
 	return &UserUsecase{
 		userRepo: userRepo,
 	}
 }
 
-func (a *UserUsecase) FindUserById(payload *httpdtos.FindUserByIdDTO) *http.APIResponse {
+func (a *UserUsecase) FindUserById(payload *dto.FindUserByIdDTO) (*dto.UserDTO, error) {
 	user, err := a.userRepo.FindOneById(payload.ID)
 	if err != nil {
-		jsonErr := http.BadRequestError(err)
-		return &http.APIResponse{APIError: jsonErr}
+		return nil, err
 	}
 
-	jsonOk := http.SuccessResponse(userToResponseDTO(user), "User Found Successfully")
-	return &http.APIResponse{APISuccess: jsonOk}
+	userDto := &dto.UserDTO{
+		ID:        user.ID,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+		Email:     user.Email,
+		Address: dto.AddressDTO{
+			Street:  user.Address.Street,
+			City:    user.Address.City,
+			State:   user.Address.State,
+			ZipCode: user.Address.ZipCode,
+		},
+	}
+	return userDto, nil
 }
 
-func (a *UserUsecase) CreateUser(payload *httpdtos.CreateUserDTO) *http.APIResponse {
-	user := userFromCreateDTO(payload)
+func (a *UserUsecase) CreateUser(payload *dto.CreateUserDTO) error {
+	user := entity.NewUser(&eprops.UserProps{
+		FirstName: payload.FirstName,
+		LastName:  payload.LastName,
+		Email:     payload.Email,
+		Address: vprops.AddressProps{
+			Street:  payload.Address.Street,
+			City:    payload.Address.City,
+			State:   payload.Address.State,
+			ZipCode: payload.Address.ZipCode,
+		},
+	})
 	if isUserValid := user.IsUserValid(); !isUserValid {
-		jsonErr := http.BadRequestError(errors.New(constant.InvalidCreatedUser))
-		return &http.APIResponse{APIError: jsonErr}
-	}
-	if userDb, err := a.userRepo.FindOneByEmail(user.Email); userDb != nil || err != nil {
-		if err != nil {
-			jsonErr := http.BadRequestError(err)
-			return &http.APIResponse{APIError: jsonErr}
-		}
-		jsonErr := http.BadRequestError(errors.New(constant.EmailAlreadyExisted))
-		return &http.APIResponse{APIError: jsonErr}
-	}
-	if err := a.userRepo.Save(user); err != nil {
-		jsonErr := http.BadRequestError(err)
-		return &http.APIResponse{APIError: jsonErr}
+		return sharederror.ErrInvalidCreatedUser
 	}
 
-	jsonOk := http.SuccessResponse(&httpdtos.AcknowledgeDTO{
-		Action:    "create_user",
-		IsSuccess: true,
-	}, "User Created Successfully")
+	existing, err := a.userRepo.FindOneByEmail(user.Email)
+	if err != nil {
+		return err
+	}
+	if existing != nil {
+		return sharederror.ErrEmailAlreadyExisted
+	}
 
-	return &http.APIResponse{APISuccess: jsonOk}
+	return a.userRepo.Save(user)
 }
 
-func (a *UserUsecase) UpdateUser(payload *httpdtos.UpdateUserDTO) *http.APIResponse {
-	user := userFromUpdateDTO(payload)
+func (a *UserUsecase) UpdateUser(payload *dto.UpdateUserDTO) error {
+	user := entity.NewUser(&eprops.UserProps{
+		FirstName: payload.FirstName,
+		LastName:  payload.LastName,
+		Email:     payload.Email,
+		Address: vprops.AddressProps{
+			Street:  payload.Address.Street,
+			City:    payload.Address.City,
+			State:   payload.Address.State,
+			ZipCode: payload.Address.ZipCode,
+		},
+	}, payload.ID)
 	if isUserValid := user.IsUserValid(); !isUserValid {
-		jsonErr := http.BadRequestError(errors.New(constant.InvalidUpdatedUser))
-		return &http.APIResponse{APIError: jsonErr}
-	}
-	if err := a.userRepo.UpdateUser(user); err != nil {
-		jsonErr := http.BadRequestError(err)
-		return &http.APIResponse{APIError: jsonErr}
+		return sharederror.ErrInvalidUpdatedUser
 	}
 
-	jsonOk := http.SuccessResponse(&httpdtos.AcknowledgeDTO{
-		Action:    "update_user",
-		IsSuccess: true,
-	}, "User Updated Successfully")
-
-	return &http.APIResponse{APISuccess: jsonOk}
+	return a.userRepo.UpdateUser(user)
 }

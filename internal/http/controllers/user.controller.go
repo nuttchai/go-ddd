@@ -1,10 +1,13 @@
 package controller
 
 import (
+	"net/http"
+
 	"github.com/labstack/echo"
-	http "github.com/nuttchai/go-ddd/common/http"
+	chttp "github.com/nuttchai/go-ddd/common/http"
 	usecase "github.com/nuttchai/go-ddd/internal/app/usecases"
 	dto "github.com/nuttchai/go-ddd/internal/http/dtos"
+	"github.com/nuttchai/go-ddd/internal/http/helpers"
 )
 
 type UserController struct {
@@ -21,33 +24,36 @@ func (c *UserController) FindUserById(e echo.Context) error {
 	payload := new(dto.FindUserByIdDTO)
 	payload.ID = e.Param("id")
 	if ok, err := payload.IsDTOValid(); !ok {
-		jsonErr := http.BadRequestError(err)
-		return e.JSON(jsonErr.Status, jsonErr)
+		res := chttp.Err(err.Error(), http.StatusBadRequest, chttp.CodeBadRequestError)
+		return e.JSON(res.Status, res.Envelope)
 	}
 
-	result := c.userUsecase.FindUserById(payload)
-	return e.JSON(result.Status(), result.Value())
+	data, err := c.userUsecase.FindUserById(payload)
+	res := helpers.BuildEnvelope(data, err)
+	return e.JSON(res.Status, res.Envelope)
 }
 
 func (c *UserController) CreateUser(e echo.Context) error {
 	payload := new(dto.CreateUserDTO)
-	if err := http.DecodeDTO(e, payload); err != nil {
-		jsonErr := http.BadRequestError(err)
-		return e.JSON(jsonErr.Status, jsonErr)
+	if err := chttp.DecodeDTO(e, payload); err != nil {
+		res := chttp.Err(err.Error(), http.StatusBadRequest, chttp.CodeBadRequestError)
+		return e.JSON(res.Status, res.Envelope)
 	}
 
-	result := c.userUsecase.CreateUser(payload)
-	return e.JSON(result.Status(), result.Value())
+	err := c.userUsecase.CreateUser(payload)
+	res := helpers.BuildEnvelope(nil, err)
+	return e.JSON(res.Status, res.Envelope)
 }
 
 func (c *UserController) UpdateUser(e echo.Context) error {
 	payload := new(dto.UpdateUserDTO)
 	payload.ID = e.Param("id")
-	if err := http.DecodeDTO(e, payload); err != nil {
-		jsonErr := http.BadRequestError(err)
-		return e.JSON(jsonErr.Status, jsonErr)
+	if err := chttp.DecodeDTO(e, payload); err != nil {
+		res := chttp.Err(err.Error(), http.StatusBadRequest, chttp.CodeBadRequestError)
+		return e.JSON(res.Status, res.Envelope)
 	}
 
-	result := c.userUsecase.UpdateUser(payload)
-	return e.JSON(result.Status(), result.Value())
+	err := c.userUsecase.UpdateUser(payload)
+	res := helpers.BuildEnvelope(nil, err)
+	return e.JSON(res.Status, res.Envelope)
 }
