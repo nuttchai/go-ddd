@@ -7,7 +7,7 @@ import (
 	chttp "github.com/nuttchai/go-ddd/common/http"
 	usecase "github.com/nuttchai/go-ddd/internal/app/usecases"
 	dto "github.com/nuttchai/go-ddd/internal/http/dtos"
-	"github.com/nuttchai/go-ddd/internal/http/helpers"
+	"github.com/nuttchai/go-ddd/internal/shared/helpers"
 )
 
 type UserController struct {
