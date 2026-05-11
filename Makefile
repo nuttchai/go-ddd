@@ -6,7 +6,7 @@ generate:
 
 # Run HTTP service locally from source.
 dev:
-	APP_ENV=local ENV_PATH=.env.local go run ./cmd/http
+	APP_ENV=local ENV_PATH=.env go run ./cmd/http
 
 # Start local Docker DB and run HTTP service with .env.local.
 dev-local:
