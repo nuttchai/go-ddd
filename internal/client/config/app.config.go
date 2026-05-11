@@ -6,6 +6,8 @@ type AppConfig struct {
 	db   DBConfig
 }
 
+var DefaultAppConfig = &AppConfig{}
+
 func (c *AppConfig) SetRESTConfig(port string) {
 	c.rest.SetPort(port)
 }

@@ -11,7 +11,6 @@ import (
 	middleware "github.com/nuttchai/go-ddd/common/middlewares"
 	config "github.com/nuttchai/go-ddd/internal/client/config"
 	cerrors "github.com/nuttchai/go-ddd/internal/common/errors"
-	types "github.com/nuttchai/go-ddd/internal/common/types"
 	context "github.com/nuttchai/go-ddd/internal/common/utils/context"
 	env "github.com/nuttchai/go-ddd/internal/common/utils/env"
 	irepository "github.com/nuttchai/go-ddd/internal/core/app/repositories"
@@ -76,7 +75,7 @@ func ProvideAppConfig() (*config.AppConfig, error) {
 	flag.StringVar(&driver, "driver", dbDriver, "Database Driver")
 	flag.Parse()
 
-	appConfig := types.AppConfig
+	appConfig := config.DefaultAppConfig
 	appConfig.SetENV(envArg)
 	appConfig.SetRESTConfig(serverPort)
 	appConfig.SetDBMetaData(dsn, driver)
