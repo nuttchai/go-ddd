@@ -1,7 +1,5 @@
 package http
 
-import nethttp "net/http"
-
 type Code string
 
 const (
@@ -48,11 +46,4 @@ func ErrWithData(message string, status int, code Code, data any) *EnvelopeResul
 			Data:  data,
 		},
 	}
-}
-
-func MapErr(err error) *EnvelopeResult {
-	if err == nil {
-		return nil
-	}
-	return Err(err.Error(), nethttp.StatusInternalServerError, CodeExceptionError)
 }

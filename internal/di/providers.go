@@ -6,19 +6,21 @@ import (
 	"fmt"
 
 	"github.com/labstack/echo"
-	config "github.com/nuttchai/go-ddd/common/config"
+	chttp "github.com/nuttchai/go-ddd/common/http"
 	cmapper "github.com/nuttchai/go-ddd/common/infra/data-mappers"
 	middleware "github.com/nuttchai/go-ddd/common/middlewares"
-	irepository "github.com/nuttchai/go-ddd/internal/app/repositories"
-	usecase "github.com/nuttchai/go-ddd/internal/app/usecases"
-	entity "github.com/nuttchai/go-ddd/internal/domain/entities"
-	route "github.com/nuttchai/go-ddd/internal/http/client/routers"
-	controller "github.com/nuttchai/go-ddd/internal/http/controllers"
-	model "github.com/nuttchai/go-ddd/internal/infra/models"
-	repository "github.com/nuttchai/go-ddd/internal/infra/repositories"
-	types "github.com/nuttchai/go-ddd/internal/shared/types"
-	context "github.com/nuttchai/go-ddd/utils/context"
-	env "github.com/nuttchai/go-ddd/utils/env"
+	config "github.com/nuttchai/go-ddd/internal/client/config"
+	cerrors "github.com/nuttchai/go-ddd/internal/common/errors"
+	types "github.com/nuttchai/go-ddd/internal/common/types"
+	context "github.com/nuttchai/go-ddd/internal/common/utils/context"
+	env "github.com/nuttchai/go-ddd/internal/common/utils/env"
+	irepository "github.com/nuttchai/go-ddd/internal/core/app/repositories"
+	usecase "github.com/nuttchai/go-ddd/internal/core/app/usecases"
+	entity "github.com/nuttchai/go-ddd/internal/core/domain/entities"
+	controller "github.com/nuttchai/go-ddd/internal/core/http/controllers"
+	route "github.com/nuttchai/go-ddd/internal/core/http/routers"
+	model "github.com/nuttchai/go-ddd/internal/core/infra/models"
+	repository "github.com/nuttchai/go-ddd/internal/core/infra/repositories"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -136,8 +138,12 @@ func ProvideUserUsecase(userRepo irepository.IUserRepository) (*usecase.UserUsec
 	return uc, nil
 }
 
-func ProvideUserController(userUsecase usecase.IUserUsecase) (*controller.UserController, error) {
-	userController := controller.NewUserController(userUsecase)
+func ProvideEnvelopeBuilder() *chttp.EnvelopeBuilder {
+	return chttp.NewEnvelopeBuilder(cerrors.ErrorMappings)
+}
+
+func ProvideUserController(userUsecase usecase.IUserUsecase, eb *chttp.EnvelopeBuilder) (*controller.UserController, error) {
+	userController := controller.NewUserController(userUsecase, eb)
 	httpController, ok := userController.(*controller.UserController)
 	if !ok {
 		return nil, errors.New(invalidUserControllerTypeAssertion)

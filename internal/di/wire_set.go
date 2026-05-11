@@ -6,20 +6,21 @@ package di
 import (
 	"github.com/google/wire"
 	cmapper "github.com/nuttchai/go-ddd/common/infra/data-mappers"
-	irepository "github.com/nuttchai/go-ddd/internal/app/repositories"
-	usecase "github.com/nuttchai/go-ddd/internal/app/usecases"
-	entity "github.com/nuttchai/go-ddd/internal/domain/entities"
-	route "github.com/nuttchai/go-ddd/internal/http/client/routers"
-	controller "github.com/nuttchai/go-ddd/internal/http/controllers"
-	mapper "github.com/nuttchai/go-ddd/internal/infra/data-mappers"
-	model "github.com/nuttchai/go-ddd/internal/infra/models"
-	repository "github.com/nuttchai/go-ddd/internal/infra/repositories"
+	irepository "github.com/nuttchai/go-ddd/internal/core/app/repositories"
+	usecase "github.com/nuttchai/go-ddd/internal/core/app/usecases"
+	entity "github.com/nuttchai/go-ddd/internal/core/domain/entities"
+	controller "github.com/nuttchai/go-ddd/internal/core/http/controllers"
+	route "github.com/nuttchai/go-ddd/internal/core/http/routers"
+	mapper "github.com/nuttchai/go-ddd/internal/core/infra/data-mappers"
+	model "github.com/nuttchai/go-ddd/internal/core/infra/models"
+	repository "github.com/nuttchai/go-ddd/internal/core/infra/repositories"
 )
 
 var InfrastructureProviderSet = wire.NewSet(
 	ProvideAppConfig,
 	ProvideDB,
 	ProvideEcho,
+	ProvideEnvelopeBuilder,
 	route.NewRouter,
 )
 

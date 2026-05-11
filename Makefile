@@ -2,7 +2,7 @@
 
 # Regenerate Google Wire injector files.
 generate:
-	go run github.com/google/wire/cmd/wire@latest ./internal/http/client/config
+	go run github.com/google/wire/cmd/wire@latest ./internal/client
 
 # Run HTTP service locally from source.
 dev:
