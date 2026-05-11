@@ -12,3 +12,7 @@ dev:
 dev-local:
 	docker compose up -d db
 	APP_ENV=local ENV_PATH=.env.local go run ./cmd/http
+
+# Clean up local Docker containers and volumes.
+clean:
+	docker compose down -v
